@@ -3,10 +3,12 @@ _*.c
 *.o
 *.pyc
 
+build/
 *.egg-info
 
 .ipynb_checkpoints/
 
+docs/html
 *.pickle
 *.doctree
 *.inv

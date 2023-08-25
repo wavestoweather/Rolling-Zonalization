@@ -2,7 +2,7 @@
 
 This repository...
 
-[LICENSE](LICENSE).
+[MIT License](LICENSE).
 
 
 ## How To Run
@@ -14,7 +14,9 @@ Clone this repository:
 
 ### Software Requirements
 
-...
+- make
+- C compiler to build Python extensions
+- Python 3 with packages listed in [`requirements.txt`](requirements.txt) (the specified versions were used during development, older/newer versions may or may not work)
 
 
 ### Data Analysis and Plots
@@ -28,9 +30,15 @@ Clone this repository:
 
 
 
-## Installing the `waveguide` package
+## The `waveguide` Python Package
 
-...
+An implementation of rolling zonalization is included in this repository.
+The software can be installed as a standalone Python package.
+Install the package from a clone of the repository:
+
+    $ pip install .
+
+Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonalization) for more information.
 
 
 ## Acknowledgements
