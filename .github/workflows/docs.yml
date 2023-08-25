@@ -1,0 +1,44 @@
+name: Deploy documentation to Pages 
+
+on:
+  push:
+    branches: [$default-branch]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Pages setup
+        uses: actions/configure-pages@v3
+      - name: Python setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - name: Dependencies
+        run: pip install sphinx numpy scipy xarray cffi
+      - name: Sphinx
+        run: make docs
+      - name: Disable Jekyll
+        run: touch docs/html/.nojekyll
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: "./docs/html"
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
