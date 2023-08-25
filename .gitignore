@@ -1,0 +1,17 @@
+_*.c
+*.so
+*.o
+*.pyc
+
+*.egg-info
+
+.ipynb_checkpoints/
+
+*.pickle
+*.doctree
+*.inv
+
+*.nc
+
+*.pdf
+
