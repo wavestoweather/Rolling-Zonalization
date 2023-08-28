@@ -9,10 +9,19 @@ YEARS := 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988 \
 # meridional wind on 18 pressure levels at 1.5° horizontal resolution
 ERA5_TUV := $(foreach y,$(YEARS),data/ERA5/ERA5-$(y)-tuv-1.5.nc)
 
-# Standard set of isentropes used in the analysis
-ISENTROPES := 345 340 335 330 325 320 315#
-ISENTROPES_CS := $(subst $(space),$(comma),$(ISENTROPES))# comma-separated
-
+# General configuration
+SEASON := "winter"#
+# Set of isentropes used in the analysis
+ISENTROPES := 345,340,335,330,325,320,315#
+# Default isentropic level
+LEVEL := 330#K
+# Default window width for the rolling zonalization
+SCALE := 60#deg
+TAPER := 0.0#
+# PV exclusion threshold for norm_grad_log_abs
+GRAD_EXCLUDE := 0.1#PVU
+# Waveguide detection threshold
+THRESHOLD := "1.2e-6"#
 
 
 # Version-dependent file ending for compiled C extensions
@@ -21,12 +30,40 @@ PYEXT := $(shell python3-config --extension-suffix)
 .SECONDARY:
 .PHONY: all reanalysis docs py-compile py-install
 
-all: figures/barotropic.pdf
+all: figures/barotropic.pdf figures/schematic.pdf
 
 
 # Rule for creating folders
 %/:
 	mkdir -p $*
+
+
+# Figure 1: barotropic waveguide diagnostics
+figures/barotropic.pdf: src/plot_barotropic.py src/common/plotting.py \
+		src/waveguide/xarray/wavenumber.py src/waveguide/xarray/pvgradient.py \
+		data/mean-isen.nc | figures/
+	python3 -m src.plot_barotropic \
+			--level=330 \
+			--isen \
+			--season="winter" \
+			data/mean-isen.nc \
+			$@
+
+# Figure 2: schematic of rolling zonalization procedure and comparison to 14
+#           day mean background state
+figures/schematic.pdf: src/plot_schematic.py src/common/plotting.py \
+		src/waveguide/xarray/pvgradient.py src/waveguide/xarray/zonalization.py \
+		data/ERA5/ERA5-2016-tuv-1.5.nc | figures/
+	python3 -m src.plot_schematic \
+			--date="2016-12-18T12:00" \
+			--scale=$(SCALE) \
+			--taper=$(TAPER) \
+			--grad-exclude=$(GRAD_EXCLUDE) \
+			--isentrope=$(LEVEL) \
+			--mean-width=14 \
+			data/ERA5/ERA5-2016-tuv-1.5.nc \
+			$@
+
 
 
 # ERA5 data download
@@ -38,14 +75,7 @@ data/ERA5/ERA5-%-tuv-1.5.nc: src/download_ERA5.py | data/ERA5/
 
 # Data processing: basic aggregation
 data/mean-isen.nc: src/calculate_means.py $(ERA5_TUV) | data/
-	python3 -m src.calculate_means --isen --levels=$(ISENTROPES_CS) $(ERA5_TUV) $@
-
-
-# Figure 1: barotropic waveguide diagnostics
-figures/barotropic.pdf: src/plot_barotropic.py src/common/plotting.py \
-		src/waveguide/xarray/wavenumber.py src/waveguide/xarray/pvgradient.py \
-		data/mean-isen.nc | figures/
-	python3 -m src.plot_barotropic --level=330 --isen --season="winter" data/mean-isen.nc $@
+	python3 -m src.calculate_means --isen --levels=$(ISENTROPES) $(ERA5_TUV) $@
 
 
 # Python 'waveguide' package
