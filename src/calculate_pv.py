@@ -7,7 +7,7 @@ import xarray as xr
 from dask.diagnostics import ProgressBar
 
 from .common import encoding
-from .waveguide.xarray import pvgradient
+from .rwguide.xarray import pvgradient
 
 
 def floats(arg):

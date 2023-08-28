@@ -2,7 +2,7 @@ Waveguide Diagnostics: Stationary Wavenumber
 ============================================
 
 
-.. automodule:: waveguide.wavenumber
+.. automodule:: rwguide.wavenumber
     :members:
     :undoc-members:
     :imported-members:
@@ -11,7 +11,7 @@ Waveguide Diagnostics: Stationary Wavenumber
 Xarray Interface
 ----------------
 
-.. automodule:: waveguide.xarray.wavenumber
+.. automodule:: rwguide.xarray.wavenumber
     :members:
     :undoc-members:
 

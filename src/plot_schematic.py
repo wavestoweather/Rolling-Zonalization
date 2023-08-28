@@ -12,7 +12,7 @@ from .common.plotting import (
     PLATE, add_map, finalize_map, draw_arrow, cf_style_pv, cf_style_gl, cf_style_aw,
     ct_style_v, add_legend_v
 )
-from .waveguide.xarray import pvgradient, zonalization
+from .rwguide.xarray import pvgradient, zonalization
 
 
 def fill_window(window, lon):

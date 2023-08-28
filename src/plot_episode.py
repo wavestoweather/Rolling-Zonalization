@@ -9,7 +9,7 @@ from cartopy.util import add_cyclic_point
 
 from .common.plotting import PLATE, add_map, finalize_map, add_box, draw_arrow
 from .common.plotting import cf_style_pv, cf_style_gl, ct_style_v, add_legend_v
-from .waveguide.xarray import hovmoeller, pvgradient
+from .rwguide.xarray import hovmoeller, pvgradient
 
 
 def open_and_merge_data(year, isentrope=330, scale=60, threshold=0.1):

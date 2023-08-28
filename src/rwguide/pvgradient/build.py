@@ -119,7 +119,7 @@ code = """
 ffibuilder.cdef(code)
 
 ffibuilder.set_source(
-    "waveguide.pvgradient._ext",
+    "rwguide.pvgradient._ext",
     code,
     sources=[
         os.path.join(os.path.dirname(os.path.relpath(__file__)), "ext.c")

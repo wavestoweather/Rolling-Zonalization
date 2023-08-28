@@ -5,7 +5,7 @@ Utility Functions
 C Bindings with CFFI
 --------------------
 
-.. automodule:: waveguide.bindings
+.. automodule:: rwguide.bindings
     :members:
     :undoc-members:
 
@@ -13,7 +13,7 @@ C Bindings with CFFI
 Xarray Utilities
 ----------------
 
-.. automodule:: waveguide.xarray.common
+.. automodule:: rwguide.xarray.common
     :members:
     :undoc-members:
 

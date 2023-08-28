@@ -2,7 +2,7 @@ Zonalized Background States
 ===========================
 
 
-.. automodule:: waveguide.zonalization
+.. automodule:: rwguide.zonalization
     :members:
     :undoc-members:
     :imported-members:
@@ -11,7 +11,7 @@ Zonalized Background States
 Weighting Windows
 -----------------
 
-.. automodule:: waveguide.zonalization.weighting
+.. automodule:: rwguide.zonalization.weighting
     :members:
     :undoc-members:
 
@@ -19,7 +19,7 @@ Weighting Windows
 Xarray Interface
 ----------------
 
-.. automodule:: waveguide.xarray.zonalization
+.. automodule:: rwguide.xarray.zonalization
     :members:
     :undoc-members:
 

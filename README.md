@@ -84,7 +84,7 @@ Figures are written to the `figures` directory:
 - Figure 4: `figures/episode.pdf`.
 
 
-## The `waveguide` Python Package
+## The `rwguide` Python Package
 
 An implementation of rolling zonalization is included in this repository.
 The software can be installed as a standalone Python package.

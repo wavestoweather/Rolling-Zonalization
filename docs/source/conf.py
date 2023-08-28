@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath("../../src"))
 
 # -- Project information -----------------------------------------------------
 
-project = "waveguide"
+project = "rwguide"
 copyright = "2023, Christopher Polster"
 author = "Christopher Polster"
 

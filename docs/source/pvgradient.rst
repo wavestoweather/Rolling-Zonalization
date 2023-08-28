@@ -2,7 +2,7 @@ Waveguide Diagnostics: PV Gradient
 ==================================
 
 
-.. automodule:: waveguide.pvgradient
+.. automodule:: rwguide.pvgradient
     :members:
     :undoc-members:
     :imported-members:
@@ -11,7 +11,7 @@ Waveguide Diagnostics: PV Gradient
 Xarray Interface
 ----------------
 
-.. automodule:: waveguide.xarray.pvgradient
+.. automodule:: rwguide.xarray.pvgradient
     :members:
     :undoc-members:
 

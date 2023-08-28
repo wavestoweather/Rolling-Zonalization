@@ -8,7 +8,7 @@ import scipy.ndimage
 from dask.diagnostics import ProgressBar
 
 from .common.xarray import group_count
-from .waveguide.xarray.pvgradient import norm_grad_log_abs
+from .rwguide.xarray.pvgradient import norm_grad_log_abs
 
 
 def mask_thresholds(ngl, thresholds):

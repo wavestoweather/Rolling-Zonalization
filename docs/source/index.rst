@@ -1,8 +1,9 @@
-Waveguide Analysis
-==================
+Rossby Waveguide Python Package
+===============================
 
 
-.. automodule:: waveguide
+.. automodule:: rwguide
+
 
 .. toctree::
    :maxdepth: 1

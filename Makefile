@@ -26,7 +26,7 @@ all: figures/barotropic.pdf figures/schematic.pdf figures/climatology.pdf figure
 
 # Figure 1: barotropic waveguide diagnostics
 figures/barotropic.pdf: src/plot_barotropic.py src/common/plotting.py \
-		src/waveguide/xarray/wavenumber.py src/waveguide/xarray/pvgradient.py \
+		src/rwguide/xarray/wavenumber.py src/rwguide/xarray/pvgradient.py \
 		data/mean-isen.nc | figures/
 	python3 -m src.plot_barotropic \
 			--level=330 \
@@ -38,7 +38,7 @@ figures/barotropic.pdf: src/plot_barotropic.py src/common/plotting.py \
 # Figure 2: schematic of rolling zonalization procedure and comparison to 14
 #           day mean background state
 figures/schematic.pdf: src/plot_schematic.py src/common/plotting.py \
-		src/waveguide/xarray/pvgradient.py src/waveguide/xarray/zonalization.py \
+		src/rwguide/xarray/pvgradient.py src/rwguide/xarray/zonalization.py \
 		data/ERA5/ERA5-2016-tuv-1.5.nc | figures/
 	python3 -m src.plot_schematic \
 			--date="2016-12-18T12:00" \
@@ -70,7 +70,7 @@ figures/climatology.pdf: src/plot_climatology.py src/common/plotting.py src/comm
 
 # Figure 4: Dec 2016 and Jan 2018 wave propagation episodes
 figures/episode.pdf: src/plot_episode.py src/common/plotting.py \
-		src/waveguide/xarray/pvgradient.py src/waveguide/xarray/hovmoeller.py \
+		src/rwguide/xarray/pvgradient.py src/rwguide/xarray/hovmoeller.py \
 		data/ERA5/ERA5-2016-tuv-1.5.nc data/ERA5/ERA5-2018-tuv-1.5.nc \
 		data/PVrz-330K-60deg.nc | figures/
 	python3 -m src.plot_episode \
@@ -119,20 +119,20 @@ data/PVrz-330K-%deg.nc: src/calculate_pvrz.py $(ERA5_TUV)
 	python3 -m src.calculate_pvrz --scale=$* --taper=0.0 --isentropes=330 $(ERA5_TUV) $@
 
 
-# Python 'waveguide' package
+# Python 'rwguide' package
 py-install:
 	pip install .
 
 py-compile: \
-		src/waveguide/hovmoeller/_ext$(PYEXT) \
-		src/waveguide/pvgradient/_ext$(PYEXT) \
-		src/waveguide/wavenumber/_ext$(PYEXT) \
-		src/waveguide/zonalization/_ext$(PYEXT)
+		src/rwguide/hovmoeller/_ext$(PYEXT) \
+		src/rwguide/pvgradient/_ext$(PYEXT) \
+		src/rwguide/wavenumber/_ext$(PYEXT) \
+		src/rwguide/zonalization/_ext$(PYEXT)
 
 src/%/_ext$(PYEXT): src/%/build.py src/%/ext.c
 	cd src && python3 $*/build.py
 
-src/waveguide/xarray/%.py: src/waveguide/%/_ext$(PYEXT)
+src/rwguide/xarray/%.py: src/rwguide/%/_ext$(PYEXT)
 	touch $@
 
 

@@ -7,7 +7,7 @@ from cartopy.util import add_cyclic_point
 
 from .common.seasons import select_season
 from .common.plotting import PLATE, add_box, add_map, finalize_map, cf_style_baro
-from .waveguide.xarray import wavenumber, pvgradient
+from .rwguide.xarray import wavenumber, pvgradient
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--level", type=float, default=300., metavar="LVL", help="vertical level in hPa or K")

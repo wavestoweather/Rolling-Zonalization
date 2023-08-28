@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="waveguide",
-    description="Waveguide analysis",
+    name="rwguide",
+    description="Rossby waveguide analysis",
     version="1.0.0",
     author="Christopher Polster",
     url="https://github.com/wavestoweather/Rolling-Zonalization",
@@ -17,10 +17,10 @@ setup(
         "": "src",
     },
     cffi_modules=[
-        "src/waveguide/hovmoeller/build.py:ffibuilder",
-        "src/waveguide/pvgradient/build.py:ffibuilder",
-        "src/waveguide/wavenumber/build.py:ffibuilder",
-        "src/waveguide/zonalization/build.py:ffibuilder"
+        "src/rwguide/hovmoeller/build.py:ffibuilder",
+        "src/rwguide/pvgradient/build.py:ffibuilder",
+        "src/rwguide/wavenumber/build.py:ffibuilder",
+        "src/rwguide/zonalization/build.py:ffibuilder"
     ]
 )
 

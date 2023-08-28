@@ -8,7 +8,7 @@ from dask.diagnostics import ProgressBar
 
 from .common.encoding import extract_encoding
 from .common.xarray import group_count
-from .waveguide.xarray.pvgradient import isob_to_isen_all
+from .rwguide.xarray.pvgradient import isob_to_isen_all
 
 
 def floats(arg):

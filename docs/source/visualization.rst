@@ -2,7 +2,7 @@ Visualization Helpers
 =====================
 
 
-.. automodule:: waveguide.hovmoeller
+.. automodule:: rwguide.hovmoeller
     :members:
     :undoc-members:
     :imported-members:
@@ -11,7 +11,7 @@ Visualization Helpers
 Xarray Interface
 ----------------
 
-.. automodule:: waveguide.xarray.hovmoeller
+.. automodule:: rwguide.xarray.hovmoeller
     :members:
     :undoc-members:
 
