@@ -30,7 +30,7 @@ PYEXT := $(shell python3-config --extension-suffix)
 .SECONDARY:
 .PHONY: all reanalysis docs py-compile py-install
 
-all: figures/barotropic.pdf figures/schematic.pdf
+all: figures/barotropic.pdf figures/schematic.pdf figures/episode.pdf
 
 
 # Rule for creating folders
@@ -64,6 +64,16 @@ figures/schematic.pdf: src/plot_schematic.py src/common/plotting.py \
 			data/ERA5/ERA5-2016-tuv-1.5.nc \
 			$@
 
+# Figure 4: Dec 2016 and Jan 2018 wave propagation episodes
+figures/episode.pdf: src/plot_episode.py src/common/plotting.py \
+		src/waveguide/xarray/pvgradient.py src/waveguide/xarray/hovmoeller.py \
+		data/ERA5/ERA5-2016-tuv-1.5.nc data/ERA5/ERA5-2018-tuv-1.5.nc \
+		data/PVrz-$(LEVEL)K-$(SCALE)deg.nc | figures/
+	python3 -m src.plot_episode \
+			--scale=$(SCALE) \
+			--grad-exclude=$(GRAD_EXCLUDE) \
+			--isentrope=$(LEVEL) \
+			$@
 
 
 # ERA5 data download
@@ -76,6 +86,13 @@ data/ERA5/ERA5-%-tuv-1.5.nc: src/download_ERA5.py | data/ERA5/
 # Data processing: basic aggregation
 data/mean-isen.nc: src/calculate_means.py $(ERA5_TUV) | data/
 	python3 -m src.calculate_means --isen --levels=$(ISENTROPES) $(ERA5_TUV) $@
+
+
+# Data processing: background state options
+
+# Rolling zonalized PV (standard window)
+data/PVrz-%K-$(SCALE)deg.nc: src/calculate_pvrz.py $(ERA5_TUV)
+	python3 -m src.calculate_pvrz --scale=$(SCALE) --taper=$(TAPER) --isentropes=$* $(ERA5_TUV) $@
 
 
 # Python 'waveguide' package
