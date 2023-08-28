@@ -1,6 +1,9 @@
 # Rolling-Zonalization
 
-This repository...
+This repository contains the software to produce all figures of the manuscript "A New Atmospheric Background State to Diagnose Local Waveguidability" by C. Polster and V. Wirth (2023).
+
+- Research by [Christopher Polster](https://dynmet.ipa.uni-mainz.de/christopher-polster/) and [Volkmar Wirth](https://dynmet.ipa.uni-mainz.de/volkmar-wirth/).
+- Software by Christopher Polster.
 
 [MIT License](LICENSE).
 
@@ -45,18 +48,22 @@ It is generally not necessary/recommended to parallelize with the `-j` option of
 The data processing is already parallelized with the default [dask](https://www.dask.org/) scheduler.
 Most scripts will provide a progress bar while running.
 
-The approximate size of the downloaded ERA5 dataset is 190 GB.
-To start the downloads without the data processing, use
+
+To start data downloads without the data processing, use
 
     $ make reanalysis
 
 If you already have a similar dataset containing temperature and horizontal wind components on pressure levels, it should generally be possible to substitute these files.
-A few changes to the `Makefile` will be necessary, e.g. setting new file paths and adapting the number of timesteps in the window for the rolling temporal mean.
+A few changes to the `Makefile` might be necessary, e.g. setting new file paths and adapting the number of timesteps in the window for the rolling temporal mean.
 
 
 ### Output
 
+ERA5 data is placed into `data/ERA5`.
+The approximate size of the downloaded dataset is 190 GB.
+
 NetCDF files with intermediate processed fields are written to the `data` directory.
+The approximate size of the processed dataset is 35 GB.
 File names use prefixes
 
 - `data/PV-*.nc`: potential vorticity,
@@ -90,5 +97,5 @@ Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonal
 
 ## Acknowledgements
 
-This research project has been carried out within the Transregional Collaborative Research Center [SFB/TRR 165](https://www.dfg.de/en/funded_projects/current_projects_programmes/list/projectdetails/index.jsp?id=257899354) "Waves to Weather" funded by the German Science Foundation (DFG). https://www.wavestoweather.de/
+This research project has been carried out within the Transregional Collaborative Research Center SFB/TRR 165 "Waves to Weather" funded by the German Science Foundation (DFG). https://www.wavestoweather.de/
 
