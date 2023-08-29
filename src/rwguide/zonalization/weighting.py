@@ -114,9 +114,10 @@ def get_window(name, width, fold=None):
     Parameters
     ----------
     name : string | tuple
-        Which window function to use. Choose a name from `scipy.signal.windows`
-        or specify a tuple containing the name and additional arguments for the
-        window creation function.
+        Which window function to use. Choose a name from
+        :py:mod:`scipy.signal.windows` or specify a tuple containing the name
+        and additional arguments for the window creation function. Examples:
+        ``"boxcar"``, ``("tukey", 0.5)``.
     width : number | iterable
         Window width in # of gridpoints. Constant or latitude-dependent.
     fold : None | Tuple | number, optional

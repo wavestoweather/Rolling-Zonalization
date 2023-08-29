@@ -18,6 +18,9 @@ def _window(window_fun, da_lon, da_lat, name, **kwargs):
 def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
     """Weighting window with a constant-distance width (in kilometers).
 
+    Combines a latitude-dependent cosine area weighting and a longitudinally
+    varying weighting window from :py:mod:`scipy.signal`.
+
     The constant width in terms of actual distance should ensure a consistent
     cut-off wavelength across the sphere. The window is returned folded (see
     :py:func:`rwguide.zonalization.weighting.fold_periodic`).
@@ -49,6 +52,9 @@ def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
 
 def fixed_deg_window(da_lon, da_lat, name="fixed_deg_window", **kwargs):
     """Weighting window with a constant-longitude width (in degrees longitude).
+
+    Combines a latitude-dependent cosine area weighting and a longitudinally
+    varying weighting window from :py:mod:`scipy.signal`.
 
     The constant width in terms of degrees longitude should ensure a consistent
     cut-off wavenumber across the sphere.
