@@ -84,9 +84,8 @@ figures/episode.pdf: src/plot_episode.py src/common/plotting.py \
 # ERA5 data download
 reanalysis: $(ERA5_TUV)
 
-	#python3 -m src.download_ERA5 $*
 data/ERA5/ERA5-%-tuv-1.5.nc: src/download_ERA5.py | data/ERA5/
-	ln -s ../../../ERA5/ERA5-$*-tuv-1.5.nc $@
+	python3 -m src.download_ERA5 $*
 
 
 # Data processing: basic aggregation
