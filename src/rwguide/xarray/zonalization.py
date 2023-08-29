@@ -14,14 +14,44 @@ def _window(window_fun, da_lon, da_lat, name, **kwargs):
     }
     return xr.DataArray(values, coords=coords, name=name, attrs=kwargs)
     
+
 def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
+    """TODO
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
     return _window(_zonalization.fixed_km_window, da_lon, da_lat, name, **kwargs)
 
+
 def fixed_deg_window(da_lon, da_lat, name="fixed_deg_window", **kwargs):
+    """TODO
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+    """
     return _window(_zonalization.fixed_deg_window, da_lon, da_lat, name, **kwargs)
 
 
 def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
+    """TODO
+
+    Parameters
+    ----------
+    vectorize : boolean, optional
+        Use vectorization of :py:func:`xarray.apply_ufunc`.
+    names : dict, optional
+        Variable name override.
+
+    Returns
+    -------
+    """
     lat, lon, sg = _common.get_names(names, "lat", "lon", "sg")
     # To avoid a coordinate name conflict, rename the longitude dimension of
     # the area weights (they are relative)
@@ -46,6 +76,18 @@ def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
 
 
 def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
+    """TODO
+
+    Parameters
+    ----------
+    vectorize : boolean, optional
+        Use vectorization of :py:func:`xarray.apply_ufunc`.
+    names : dict, optional
+        Variable name override.
+
+    Returns
+    -------
+    """
     lat, lon, pv = _common.get_names(names, "lat", "lon", "pv")
     if da_bg is None:
         da_bg = da_sg
@@ -89,6 +131,18 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
 
 
 def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
+    """TODO
+
+    Parameters
+    ----------
+    vectorize : boolean, optional
+        Use vectorization of :py:func:`xarray.apply_ufunc`.
+    names : dict, optional
+        Variable name override.
+
+    Returns
+    -------
+    """
     lat, lon, pv = _common.get_names(names, "lat", "lon", "pv")
     if da_bg is None:
         da_bg = da_sg

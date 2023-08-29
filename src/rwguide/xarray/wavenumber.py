@@ -5,7 +5,7 @@ from .common import get_names
 from .. import wavenumber as _wavenumber
 
 
-def stationary_wavenumber(da_u, vectorize=True, names=None):
+def stationary_wavenumber(da_u, *, vectorize=True, names=None):
     """Barotropic stationary wavenumber.
 
     Computed as ``Kₛ = Re(sqrt(Kₛ²)) - Im(sqrt(Kₛ²))``, i.e. positive values of
@@ -48,7 +48,7 @@ def stationary_wavenumber(da_u, vectorize=True, names=None):
     ).rename(ks)
 
 
-def stationary_wavenumber_squared(da_u, vectorize=True, names=None):
+def stationary_wavenumber_squared(da_u, *, vectorize=True, names=None):
     """Square of the barotropic stationary wavenumber.
 
     ``Kₛ² = a cos(ϕ)² u⁻¹ ∂ζₐ/∂ϕ``, where ``a = 6371.2 km`` is the radius of
