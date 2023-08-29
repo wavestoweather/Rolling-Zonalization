@@ -1,5 +1,3 @@
-"""Waveguide detection and analysis based on PV."""
-
 import numpy as np
 
 from .variables import (

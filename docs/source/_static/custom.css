@@ -24,6 +24,10 @@ div#searchbox {
     margin-bottom: 10px;
 }
 
+dl {
+  margin-bottom: 25px;
+}
+
 body,
 div.related,
 div.sphinxsidebar h3,

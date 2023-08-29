@@ -16,34 +16,74 @@ def _window(window_fun, da_lon, da_lat, name, **kwargs):
     
 
 def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
-    """TODO
+    """Weighting window with a constant-distance width (in kilometers).
+
+    The constant width in terms of actual distance should ensure a consistent
+    cut-off wavelength across the sphere. The window is returned folded (see
+    :py:func:`rwguide.zonalization.weighting.fold_periodic`).
+
+    .. note::
+        We found in testing that a constant-distance width window has rather
+        poor PV conservation properties when used with rolling zonalization.
+        Consider using a constant-longitude window instead
+        (:py:func:`fixed_deg_window`).
 
     Parameters
     ----------
+    da_lon : xarray.DataArray
+        Longitude coordinate.
+    da_lat : xarray.DataArray
+        Latitude coordinate.
+    name : str, optional
+        Name assigned to the output *DataArray*.
+    kwargs : any
+        Keyword arguments given to :py:func:`rwguide.zonalization.fixed_km_window`.
 
     Returns
     -------
+    xarray.DataArray
+        Weighting window.
     """
     return _window(_zonalization.fixed_km_window, da_lon, da_lat, name, **kwargs)
 
 
 def fixed_deg_window(da_lon, da_lat, name="fixed_deg_window", **kwargs):
-    """TODO
+    """Weighting window with a constant-longitude width (in degrees longitude).
+
+    The constant width in terms of degrees longitude should ensure a consistent
+    cut-off wavenumber across the sphere.
 
     Parameters
     ----------
+    da_lon : xarray.DataArray
+        Longitude coordinate.
+    da_lat : xarray.DataArray
+        Latitude coordinate.
+    name : str, optional
+        Name assigned to the output *DataArray*.
+    kwargs : any
+        Keyword arguments given to :py:func:`rwguide.zonalization.fixed_deg_window`.
 
     Returns
     -------
+    xarray.DataArray
+        Weighting window.
     """
     return _window(_zonalization.fixed_deg_window, da_lon, da_lat, name, **kwargs)
 
 
 def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
-    """TODO
+    """Weighted longitudinal rolling mean.
+
+    A simple procedure to approximate the background-state isentropic density
+    field for rolling zonalization.
 
     Parameters
     ----------
+    da_area : xarray.DataArray
+        Weighting window.
+    da_sg : xarray.DataArray
+        Isentropic density field. Core dimensions: latitude, longitude.
     vectorize : boolean, optional
         Use vectorization of :py:func:`xarray.apply_ufunc`.
     names : dict, optional
@@ -51,6 +91,8 @@ def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
 
     Returns
     -------
+    xarray.DataArray
+        Rolling-mean background isentropic density.
     """
     lat, lon, sg = _common.get_names(names, "lat", "lon", "sg")
     # To avoid a coordinate name conflict, rename the longitude dimension of
@@ -76,10 +118,29 @@ def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
 
 
 def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
-    """TODO
+    """Zonalization (hemispheric or sectoral/fixed-window).
+
+    The PV contours for the zonalization are automatically determined based on
+    the input data. Integrations carried out with a conditional boxcounting
+    quadrature scheme. Northern and southern hemispheres are automatically
+    detected and zonalized separately. Regions with 0-valued isentropic density
+    are omitted in the surface integrals.
 
     Parameters
     ----------
+    da_area : xarray.DataArray
+        Weighting window or meridional profile of weighting coefficients (for
+        "normal" hemispheric zonalization).
+    da_av : xarray.DataArray
+        Isentropic absolute vorticity field in `1 / s`. Core dimensions:
+        latitude, longitude.
+    da_sg : xarray.DataArray
+        Isentropic density field in `kg / m² / K`. Core dimensions: latitude,
+        longitude.
+    da_bg : xarray.DataArray, optional
+        Background state isentropic density field in `kg / m² / K`. Core
+        dimensions: latitude, longitude. If none given, *da_sg* is used for the
+        background too.
     vectorize : boolean, optional
         Use vectorization of :py:func:`xarray.apply_ufunc`.
     names : dict, optional
@@ -87,6 +148,8 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
 
     Returns
     -------
+    xarray.DataArray
+        Zonalized PV (in `PVU`).
     """
     lat, lon, pv = _common.get_names(names, "lat", "lon", "pv")
     if da_bg is None:
@@ -131,10 +194,28 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
 
 
 def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
-    """TODO
+    """Rolling zonalization.
+
+    The PV contours for the zonalizations are automatically determined based on
+    the input data. Integrations carried out with a conditional boxcounting
+    quadrature scheme. Northern and southern hemispheres are automatically
+    detected and zonalized separately. Regions with 0-valued isentropic density
+    are omitted in the surface integrals.
 
     Parameters
     ----------
+    da_area : xarray.DataArray
+        Weighting window.
+    da_av : xarray.DataArray
+        Isentropic absolute vorticity field in `1 / s`. Core dimensions:
+        latitude, longitude.
+    da_sg : xarray.DataArray
+        Isentropic density field in `kg / m² / K`. Core dimensions: latitude,
+        longitude.
+    da_bg : xarray.DataArray, optional
+        Background state isentropic density field in `kg / m² / K`. Core
+        dimensions: latitude, longitude. If none given, *da_sg* is used for the
+        background too.
     vectorize : boolean, optional
         Use vectorization of :py:func:`xarray.apply_ufunc`.
     names : dict, optional
@@ -142,6 +223,8 @@ def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names
 
     Returns
     -------
+    xarray.DataArray
+        Rolling zonalized PV (in `PVU`).
     """
     lat, lon, pv = _common.get_names(names, "lat", "lon", "pv")
     if da_bg is None:

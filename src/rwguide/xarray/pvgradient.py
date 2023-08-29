@@ -226,7 +226,27 @@ def isentropic_density_isob(da_pt, *, names=None):
 
 
 def interpolate_isob_to_isen(ds, da_isen=None, *, names=None):
-    """TODO"""
+    """Interpolation from pressure levels to isentropic levels.
+
+    Either assign the target isentropic levels as a coordinate (isentrope) to
+    the input dataset or provide *da_isen*. The pressure coordinate (level)
+    must be specified in ascending order, the isentropic levels in descending
+    order (both top-down). Out-of-range values are filled with NaN.
+
+    Parameters
+    ----------
+    ds : xarray.Dataset
+        Input data fields. Core dimensions: level, latitude, longitude.
+    da_isen : xarray.DataArray, optional
+        Override for isentropic levels to interpolate to (in `K`).
+    names : dict, optional
+        Variable name override.
+
+    Returns
+    -------
+    xarray.Dataset
+        Dataset with all interpolated fields.
+    """
     isen, isob, lat, lon, pt, pres = get_names(names, "isen", "isob", "lat", "lon", "pt", "pres")
     # If isentropic levels are not specified explicitly, take them from the
     # dataset (arity-1 call), otherwise use the supplied levels and their name
@@ -265,7 +285,27 @@ def interpolate_isob_to_isen(ds, da_isen=None, *, names=None):
 
 
 def absolute_vorticity(da_u, da_v, *, names=None):
-    """TODO"""
+    """Absolute vorticity of a horizontal wind field.
+
+    Coriolis parameter + vertical component of relative vorticity. The planet
+    is Earth with angular frequency ``7.292e-5 / s`` and radius ``6371.2 km``.
+
+    Parameters
+    ----------
+    da_u : xarray.DataArray
+        Zonal wind component field in ``m / s``. Core dimensions: latitude,
+        longitude.
+    da_v : xarray.DataArray
+        Meridional wind component field in ``m / s``. Core dimensions:
+        latitude, longitude.
+    names : dict, optional
+        Variable name override.
+
+    Returns
+    -------
+    xarray.DataArray
+        Absolute vorticity field in ``1 / s``.
+    """
     lat, lon, av = get_names(names, "lat", "lon", "av")
     return xr.apply_ufunc(
         _pvgradient.absolute_vorticity,
@@ -330,17 +370,27 @@ def potential_vorticity_isen(da_av, da_sg, *, names=None):
 
 
 def isob_to_isen_all(ds, *, vectorize=True, names=None):
-    """TODO.
+    """All-in-one isentropic PV computation from pressure-level inputs.
 
-    Compute pressure, isentropic density, absolute vorticity and Ertel
-    potential vorticity on isentropes.
+    Computes pressure (in ``hPa``), isentropic density (in ``kg / m² / K``),
+    absolute vorticity (in ``1 / s``) and Ertel potential vorticity (in
+    ``PVU``) on isentropes (in ``K``, descending order) from temperature (in
+    ``K``) and zonal and meridional wind components (in ``m / s``) on pressure
+    levels (in ``hPa``, ascending order).
+
+    .. note::
+        Using this function is generally faster and easier than going through
+        :py:func:`potential_temperature_isob`,
+        :py:func:`isentropic_density_isob`,
+        :py:func:`interpolate_isob_to_isen`, :py:func:`absolute_vorticity` and
+        :py:func:`potential_vorticity_isen` individually.
 
     Parameters
     ----------
     ds : xarray.Dataset
-        Input dataset. Must contain zonal wind (m / s), meridional wind (m / s) and
-        temperature (K) on pressure levels (hPa) as well as isentropic levels
-        (K) to interpolate to.
+        Input dataset with temperature and horizontal wind components as well
+        as isentropic levels to interpolate to. Core dimensions: level,
+        latitude, longitude.
     vectorize : boolean, optional
         Use vectorization of :py:func:`xarray.apply_ufunc`.
     names : dict, optional
@@ -349,7 +399,8 @@ def isob_to_isen_all(ds, *, vectorize=True, names=None):
     Returns
     -------
     xarray.Dataset
-        Dataset containing all output variables.
+        Dataset containing all output variables. Core dimensions: isentrope,
+        latitude, longitude.
     """
     isob, isen, lat, lon, t, u, v, pres, sg, av, pv = get_names(
         names, "isob", "isen", "lat", "lon", "t", "u", "v", "pres", "sg", "av", "pv"

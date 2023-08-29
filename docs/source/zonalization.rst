@@ -3,8 +3,23 @@ Zonalized Background States
 
 Zonalization and rolling zonalization of potential vorticity (PV) on isentropes.
 
-.. note::
-    The implementation of zonalization uses a generalized weighting window.
+
+Example
+-------
+
+>>> from rwguide.xarray import zonalization
+
+Create a weighting window for rolling zonalization:
+
+>>> TODO
+
+Compute a rolling-mean isentropic density background:
+
+>>> TODO
+
+Run the rolling zonalization:
+
+>>> TODO
 
 
 Xarray Interface
@@ -15,8 +30,8 @@ Xarray Interface
     :undoc-members:
 
 
-Numpy Interface: Zonalization
------------------------------
+Numpy Interface
+---------------
 
 .. automodule:: rwguide.zonalization
     :members:
@@ -24,8 +39,10 @@ Numpy Interface: Zonalization
     :imported-members:
 
 
-Numpy Interface: Weighting Windows
-----------------------------------
+Weighting Windows
+-----------------
+
+TODO: Intro to how the weighting works.
 
 .. automodule:: rwguide.zonalization.weighting
     :members:
