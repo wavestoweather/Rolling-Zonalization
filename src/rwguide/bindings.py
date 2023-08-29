@@ -8,7 +8,7 @@ DTYPE = np.float64
 PTYPE = "double *"
 
 def as_pointer(arr):
-    """Return a CFFI-compatible pointer to the array."""
+    """Return a CFFI-compatible double pointer to the array."""
     if arr is None:
         return ffi.NULL
     assert arr.dtype == DTYPE
@@ -96,25 +96,4 @@ def require(arr, dtype=np.double, order="C", shape=None, fold=False):
         else:
             raise ValueError(f"the array has more dimensions ({out.ndim}) than it should ({ndim})")
     return out, out.shape, orig_shape
-
-
-def reshape_to_lev_lat_lon(a, lat_lon_if_2d=False, fold_lev=False):
-    if a.ndim == 0:
-        raise ValueError("cannot compute stationary wavenumber from number")
-    # 1-dimensional input is assumed to be a function of lat
-    elif a.ndim == 1:
-        return a.reshape((1, a.size, 1))
-    # 2-dimensional input may be lev-lat or lat-lon
-    elif a.ndim == 2:
-        return a.reshape((1, *a.shape) if lat_lon_if_2d else (*a.shape, 1))
-    # 3-dimensional input is already good
-    elif a.ndim == 3:
-        return a
-    # Fold additional dimensions into lev only if allowed
-    elif fold_lev:
-        *levshape, nlat, nlon = a.shape
-        return a.reshape((np.product(levshape), nlat, nlon))
-    # Otherwise array cannot be reshaped to lev-lat-lon
-    else:
-        raise ValueError("cannot reshape array into lev-lat-lon")
 
