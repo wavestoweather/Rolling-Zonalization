@@ -26,7 +26,7 @@ all: figures/barotropic.pdf figures/schematic.pdf figures/climatology.pdf figure
 
 # Figure 1: barotropic waveguide diagnostics
 figures/barotropic.pdf: src/plot_barotropic.py src/common/plotting.py \
-		src/rwguide/xarray/wavenumber.py src/rwguide/xarray/pvgradient.py \
+		src/rwguide/wavenumber/_ext$(PYEXT) src/rwguide/pvgradient/_ext$(PYEXT) \
 		data/mean-isen.nc | figures/
 	python3 -m src.plot_barotropic \
 			--level=330 \
@@ -38,7 +38,7 @@ figures/barotropic.pdf: src/plot_barotropic.py src/common/plotting.py \
 # Figure 2: schematic of rolling zonalization procedure and comparison to 14
 #           day mean background state
 figures/schematic.pdf: src/plot_schematic.py src/common/plotting.py \
-		src/rwguide/xarray/pvgradient.py src/rwguide/xarray/zonalization.py \
+		src/rwguide/pvgradient/_ext$(PYEXT) src/rwguide/zonalization/_ext$(PYEXT) \
 		data/ERA5/ERA5-2016-tuv-1.5.nc | figures/
 	python3 -m src.plot_schematic \
 			--date="2016-12-18T12:00" \
@@ -53,6 +53,7 @@ figures/schematic.pdf: src/plot_schematic.py src/common/plotting.py \
 # Figure 3: PV spectrum, waveguide occurrence comparison 60° and 90°, vertical
 #           waveguide occurrence structure
 figures/climatology.pdf: src/plot_climatology.py src/common/plotting.py src/common/seasons.py \
+		src/rwguide/pvgradient/_ext$(PYEXT) \
 		data/PV-330K-sprop.nc data/PVrm-330K-sprop.nc data/mean-isen-sprop.nc \
 		data/PVrz-330K-90deg-occur.nc data/PVrz-330K-90deg-mean.nc data/PVrz-330K-90deg-sprop.nc \
 		data/PVrz-330K-60deg-occur.nc data/PVrz-330K-60deg-mean.nc data/PVrz-330K-60deg-sprop.nc \
@@ -70,7 +71,7 @@ figures/climatology.pdf: src/plot_climatology.py src/common/plotting.py src/comm
 
 # Figure 4: Dec 2016 and Jan 2018 wave propagation episodes
 figures/episode.pdf: src/plot_episode.py src/common/plotting.py \
-		src/rwguide/xarray/pvgradient.py src/rwguide/xarray/hovmoeller.py \
+		src/rwguide/pvgradient/_ext$(PYEXT) src/rwguide/hovmoeller/_ext$(PYEXT) \
 		data/ERA5/ERA5-2016-tuv-1.5.nc data/ERA5/ERA5-2018-tuv-1.5.nc \
 		data/PVrz-330K-60deg.nc | figures/
 	python3 -m src.plot_episode \
@@ -83,15 +84,16 @@ figures/episode.pdf: src/plot_episode.py src/common/plotting.py \
 # ERA5 data download
 reanalysis: $(ERA5_TUV)
 
+	#python3 -m src.download_ERA5 $*
 data/ERA5/ERA5-%-tuv-1.5.nc: src/download_ERA5.py | data/ERA5/
-	python3 -m src.download_ERA5 $*
+	ln -s ../../../ERA5/ERA5-$*-tuv-1.5.nc $@
 
 
 # Data processing: basic aggregation
-data/mean-isen.nc: src/calculate_means.py $(ERA5_TUV) | data/
+data/mean-isen.nc: src/calculate_means.py src/rwguide/pvgradient/_ext$(PYEXT) $(ERA5_TUV) | data/
 	python3 -m src.calculate_means --isen --levels="345,340,335,330,325,320,315" $(ERA5_TUV) $@
 
-data/%-mean.nc: data/%.nc src/calculate_means.py
+data/%-mean.nc: data/%.nc src/calculate_means.py src/rwguide/pvgradient/_ext$(PYEXT)
 	python3 -m src.calculate_means $< $@
 
 # Data processing: spatial properties
@@ -99,11 +101,11 @@ data/%-sprop.nc: src/calculate_sprops.py data/%.nc
 	python3 -m src.calculate_sprops data/$*.nc $@
 
 # Data processing: waveguide occurrence frequency
-data/%-occur.nc: data/%.nc src/calculate_occurrence.py
+data/%-occur.nc: data/%.nc src/calculate_occurrence.py src/rwguide/pvgradient/_ext$(PYEXT)
 	python3 -m src.calculate_occurrence --threshold="0.8e-6,1.0e-6,1.2e-6,1.4e-6" --grad-exclude=0.1 $< $@
 
 # Background state: just PV
-data/PV-%K.nc: src/calculate_pv.py $(ERA5_TUV)
+data/PV-%K.nc: src/calculate_pv.py src/rwguide/pvgradient/_ext$(PYEXT) $(ERA5_TUV)
 	python3 -m src.calculate_pv --isentropes=$* $(ERA5_TUV) $@
 
 # Background state: rolling-temporal-mean PV (57 = (14 * 24h / 6h) + 1 = 2 weeks of 6-hourly data)
@@ -111,11 +113,11 @@ data/PVrm-%K.nc: src/calculate_rollmean.py data/PV-%K.nc
 	python3 -m src.calculate_rollmean --length=57 --window=boxcar data/PV-$*K.nc $@
 
 # Background state: rolling zonalized PV (standard window)
-data/PVrz-%K-60deg.nc: src/calculate_pvrz.py $(ERA5_TUV)
+data/PVrz-%K-60deg.nc: src/calculate_pvrz.py src/rwguide/pvgradient/_ext$(PYEXT) src/rwguide/zonalization/_ext$(PYEXT) $(ERA5_TUV)
 	python3 -m src.calculate_pvrz --scale=60 --taper=0.0 --isentropes=$* $(ERA5_TUV) $@
 
 # Background state: additional rule for different window widths on 330K
-data/PVrz-330K-%deg.nc: src/calculate_pvrz.py $(ERA5_TUV)
+data/PVrz-330K-%deg.nc: src/calculate_pvrz.py src/rwguide/pvgradient/_ext$(PYEXT) src/rwguide/zonalization/_ext$(PYEXT) $(ERA5_TUV)
 	python3 -m src.calculate_pvrz --scale=$* --taper=0.0 --isentropes=330 $(ERA5_TUV) $@
 
 
@@ -131,9 +133,6 @@ py-compile: \
 
 src/%/_ext$(PYEXT): src/%/build.py src/%/ext.c
 	cd src && python3 $*/build.py
-
-src/rwguide/xarray/%.py: src/rwguide/%/_ext$(PYEXT)
-	touch $@
 
 
 # Documentation
