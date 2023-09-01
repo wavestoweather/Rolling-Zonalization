@@ -21,8 +21,9 @@ def horizontal_gradient(da, *, vectorize=True, names=None):
 
     Returns
     -------
-    Tuple[xarray.DataArray, xarray.DataArray]
-        Zonal and meridional gradient of the scalar input field.
+    xarray.Dataset
+        Zonal (``gradx_*``) and meridional (``grady_*``) gradient of the scalar
+        input field.
     """
     lat, lon = get_names(names, "lat", "lon")
     gx, gy = xr.apply_ufunc(
