@@ -127,7 +127,7 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     """Zonalization (hemispheric or sectoral/fixed-window).
 
     The PV contours for the zonalization are automatically determined based on
-    the input data. Integrations carried out with a conditional boxcounting
+    the input data. Integrations are carried out with a conditional boxcounting
     quadrature scheme. Northern and southern hemispheres are automatically
     detected and zonalized separately. Regions with 0-valued isentropic density
     are omitted in the surface integrals.
@@ -203,7 +203,7 @@ def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names
     """Rolling zonalization.
 
     The PV contours for the zonalizations are automatically determined based on
-    the input data. Integrations carried out with a conditional boxcounting
+    the input data. Integrations are carried out with a conditional boxcounting
     quadrature scheme. Northern and southern hemispheres are automatically
     detected and zonalized separately. Regions with 0-valued isentropic density
     are omitted in the surface integrals.

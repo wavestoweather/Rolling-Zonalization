@@ -93,7 +93,7 @@ We generalize the weighting to
 
 where ``w`` is now an arbitrary weighting function that can vary both in latitude and longitude.
 In the limit of a simple boxcar window, we arrive at basic rolling zonalization where PV is zonalized normally in a rolling window.
-But the weighting window can, e.g. be designed with tapered edges and can widen on the lat-lon grid towards the poles to obtain a fixed window width in terms of actual distance.
+But the weighting window can, e.g., be designed with tapered edges and can widen on the lat-lon grid towards the poles to obtain a fixed window width in terms of actual distance.
 
 We provide a set of functions to build customized weighting windows on the sphere based on cosine area weighting and window functions from :py:mod:`scipy.signal`:
 
