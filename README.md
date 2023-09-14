@@ -1,11 +1,13 @@
 # Rolling-Zonalization
 
-This repository contains the software to produce all figures of the manuscript "A New Atmospheric Background State to Diagnose Local Waveguidability" by C. Polster and V. Wirth (2023).
+This repository contains the software to produce all figures of the manuscript "A New Atmospheric Background State to Diagnose Local Waveguidability" by C. Polster and V. Wirth (2023), under review. Preprint available on ESS Open Archive: https://doi.org/10.22541/essoar.169447416.65437422/v1.
 
 - Research by [Christopher Polster](https://dynmet.ipa.uni-mainz.de/christopher-polster/) and [Volkmar Wirth](https://dynmet.ipa.uni-mainz.de/volkmar-wirth/).
 - Software by Christopher Polster.
 
 [MIT License](LICENSE).
+
+[![DOI](https://zenodo.org/badge/682976838.svg)](https://zenodo.org/badge/latestdoi/682976838)
 
 
 ## How To Run
