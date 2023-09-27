@@ -133,7 +133,6 @@ int horizontal_gradient(
                 dlambda
             );
         }
-        free(loncoef);
 
         // Meridional direction: d/dphi term
         // Interior domain
@@ -182,6 +181,7 @@ int horizontal_gradient(
             }
         }
     }
+    free(loncoef);
     return 0;
 }
 
