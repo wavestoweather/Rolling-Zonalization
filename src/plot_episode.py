@@ -33,7 +33,7 @@ def plot_episode(data, hx, dates, contour=1.5):
     g_hov = hovmoeller.mean_along_contour(contour, data["pv_rz"], data["ngl_pv_rz"], **hov_kernels)
     cf = hx.contourf(xlon, ytime, g_hov, **cf_style_gl)
     hx.contour(xlon, ytime, v_hov, **ct_style_v)
-    hx.yaxis.tick_right()
+    #hx.yaxis.tick_right()
     hx.set_xticks([-150, -90, -30, 30, 90, 150])
     hx.set_xticklabels(["150°W", "90°W", "30°W", "30°E", "90°E", "150°E"])
     hx.set_xticks([-180, -120, -60, 0, 60, 120, 180], minor=True)
@@ -71,16 +71,16 @@ if __name__ == "__main__":
 
     fig = plt.figure(figsize=(10, 6.2))
 
-    mxA1 = add_map(fig, (0.01, 0.82, 0.40, 0.14), label="a", title="")
-    mxA2 = add_map(fig, (0.01, 0.63, 0.40, 0.14), label="b", title="")
-    hx1 = add_box(fig, (0.45, 0.65, 0.35, 0.31), label="c", title="")
+    hx1 = add_box(fig, (0.065, 0.65, 0.35, 0.31), label="a", title="")
+    mxA1 = add_map(fig, (0.47, 0.82, 0.40, 0.14), label="b", title="")
+    mxA2 = add_map(fig, (0.47, 0.63, 0.40, 0.14), label="c", title="")
     
-    mxB1 = add_map(fig, (0.01, 0.39, 0.40, 0.14), label="d", title="")
-    mxB2 = add_map(fig, (0.01, 0.20, 0.40, 0.14), label="e", title="")
-    mxB3 = add_map(fig, (0.01, 0.01, 0.40, 0.14), label="f", title="")
-    hx2 = add_box(fig, (0.45, 0.04, 0.35, 0.49), label="g", title="")
+    hx2 = add_box(fig, (0.065, 0.04, 0.35, 0.49), label="d", title="")
+    mxB1 = add_map(fig, (0.47, 0.39, 0.40, 0.14), label="e", title="")
+    mxB2 = add_map(fig, (0.47, 0.20, 0.40, 0.14), label="f", title="")
+    mxB3 = add_map(fig, (0.47, 0.01, 0.40, 0.14), label="g", title="")
 
-    cx = fig.add_axes((0.93, 0.15, 0.01, 0.80))
+    cx = fig.add_axes((0.92, 0.03, 0.01, 0.80))
 
     # Episode 1: 2016-12-15 to 2016-12-21
     data = open_data(2016).squeeze()
@@ -94,13 +94,13 @@ if __name__ == "__main__":
     ])
     hx1.set_yticks([np.datetime64(f"2016-12-{d:0>2}") for d in [14, 15, 16, 17, 18, 19, 20]])
     hx1.set_yticklabels([
-        "14 Dec",
+        "\n14 Dec\n2016",
         "15 Dec",
         "16 Dec",
         "17 Dec",
         "18 Dec",
         "19 Dec",
-        "20 Dec 2016",
+        "20 Dec",
     ])
 
     # Episode 2: 2018-01-02 to 2018-01-15
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     ], contour=1.0)
     hx2.set_yticks([np.datetime64(f"2018-01-{d:0>2}") for d in [4, 5, 6, 7, 8, 9, 10, 11, 12]])
     hx2.set_yticklabels([
-        "4 Jan",
+        "\n4 Jan\n2018",
         "5 Jan",
         "6 Jan",
         "7 Jan",
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         "9 Jan",
         "10 Jan",
         "10 Jan",
-        "12 Jan 2018",
+        "12 Jan",
     ])
 
     cb = plt.colorbar(cf, cax=cx, orientation="vertical", spacing="proportional")
@@ -132,13 +132,13 @@ if __name__ == "__main__":
     cb.set_ticklabels(["{:.1f}".format(lvl * 1e6).rstrip(".0") for lvl in cf_style_gl["levels"]])
     cb.set_label(r"waveguidability proxy $\| \nabla \log(q_\mathrm{rz}) \|$ [$10^{-6}$]")
 
-    add_legend_v(fig, loc="lower right", frameon=False, fontsize="small", title_fontsize="small")
+    add_legend_v(fig, loc="upper right", frameon=False, fontsize="small", title_fontsize="small")
 
-    draw_arrow(fig, (0.445, 0.836), (0.42, 0.865))
-    draw_arrow(fig, (0.445, 0.735), (0.42, 0.715))
-    draw_arrow(fig, (0.445, 0.350), (0.42, 0.390))
-    draw_arrow(fig, (0.445, 0.225), (0.42, 0.240))
-    draw_arrow(fig, (0.445, 0.100), (0.42, 0.090))
+    draw_arrow(fig, (0.423, 0.836), (0.46, 0.865))
+    draw_arrow(fig, (0.423, 0.725), (0.46, 0.715))
+    draw_arrow(fig, (0.423, 0.350), (0.46, 0.400))
+    draw_arrow(fig, (0.423, 0.225), (0.46, 0.240))
+    draw_arrow(fig, (0.423, 0.100), (0.46, 0.090))
 
     if args.outfile is None:
         plt.show()

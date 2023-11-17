@@ -47,6 +47,7 @@ figures/schematic.pdf: src/plot_schematic.py src/common/plotting.py \
 			--grad-exclude=0.1 \
 			--isentrope=330 \
 			--mean-width=14 \
+			--mean-ntrunc=4 \
 			data/ERA5/ERA5-2016-tuv-1.5.nc \
 			$@
 
@@ -67,6 +68,7 @@ figures/climatology.pdf: src/plot_climatology.py src/common/plotting.py src/comm
 			--scale-cmp=90 \
 			--season=winter \
 			--threshold="1.2e-6" \
+			--mean-ntrunc=4 \
 			$@
 
 # Figure 4: Dec 2016 and Jan 2018 wave propagation episodes

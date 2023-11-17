@@ -81,6 +81,8 @@ parser.add_argument("--scale-cmp", type=int, default=90, metavar="PATH")
 parser.add_argument("--level-cmp", type=int, default=330, metavar="LVL", help="isentropic level (in K)")
 parser.add_argument("--season", choices=["ALL", "DJF", "MAM", "JJA", "SON", "winter", "summer"], default="DJF")
 parser.add_argument("--threshold", type=float, default=1.0e-6)
+parser.add_argument("--mean-ntrunc", type=int, default=4, metavar="K",
+        help="zonal wavenumber truncation for comparison (last k kept)")
 parser.add_argument("outfile", type=str, nargs="?", default=None)
 
 if __name__ == "__main__":
@@ -188,13 +190,14 @@ if __name__ == "__main__":
     })
     zspec = zspec.sel({ "isentrope": args.level_cmp })
     zspec = select_season(zspec, args.season)
-    zspec = zspec.sel({ "latitude": slice(60, 30) }).mean(dim="latitude") # TODO
+    zspec = zspec.sel({ "latitude": slice(60, 30) }).mean(dim="latitude")
     zspec = zspec * 1e-3
 
     k = zspec.coords["wavenumber"]
     zx.plot(k, zspec["orig"], color="#000", linewidth=2.0, label="inst.")
     zx.plot(k, zspec["clim"], color="#999", linewidth=2.0, label="clim.")
-    zx.plot(k, zspec["rm14"], color="#369", linewidth=2.0, label="14d")
+    zx.plot(k[:args.mean_ntrunc], zspec["rm14"][:args.mean_ntrunc], color="#369", linewidth=2.0, label="14d")
+    zx.plot(k[args.mean_ntrunc-1:], zspec["rm14"][args.mean_ntrunc-1:], color="#369", linewidth=2.0, linestyle="dotted")
     zx.plot(k, zspec["rz60"], color="#F00", linewidth=2.0, label=f"{args.scale}°")
     zx.plot(k, zspec["rz90"], color="#900", linewidth=2.0, label=f"{args.scale_cmp}°")
     zx.legend(loc="upper right", fontsize="small", framealpha=1)

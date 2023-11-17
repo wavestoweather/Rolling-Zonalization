@@ -26,6 +26,10 @@ def fill_window(window, lon):
     filled[:,l:r] = window.values
     return xr.DataArray(filled, coords=[lat, lon], name=window.name, attrs=window.attrs)
 
+def truncate(x, ntrunc):
+    spec = np.fft.rfft(x)
+    spec[ntrunc+1:] = 0.
+    return np.fft.irfft(spec)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--date", type=str, default="2016-09-26T00:00",
@@ -41,6 +45,8 @@ parser.add_argument("--grad-exclude", type=float, default=0.1, metavar="PV",
         help="PV exclusion threshold for gradient computation (in PVU)")
 parser.add_argument("--mean-width", type=int, default=14, metavar="DAYS",
         help="window width for rolling mean comparison (in d)")
+parser.add_argument("--mean-ntrunc", type=int, default=4, metavar="K",
+        help="zonal wavenumber truncation for comparison (last k kept)")
 parser.add_argument("infile", type=str, default="data/ERA5/ERA5-2016-tuv-1.5.nc")
 parser.add_argument("outfile", type=str, nargs="?", default=None)
 
@@ -65,8 +71,19 @@ if __name__ == "__main__":
     isen_mean = pvgradient.isob_to_isen_all(data_mean).squeeze().mean(dim="time")
     isen_inst = pvgradient.isob_to_isen_all(data_inst).squeeze()
 
+    # Truncate rolling-mean based state if specified
+    if args.mean_ntrunc > 0:
+        isen_mean = xr.apply_ufunc(
+            truncate,
+            isen_mean,
+            kwargs={ "ntrunc": args.mean_ntrunc },
+            input_core_dims=[["longitude"]],
+            output_core_dims=[["longitude"]],
+            vectorize=True
+        )
+
     # PV gradient diagnostics for two background states:
-    # 1) Temporal mean
+    # 1) Temporal mean and zonal wavenumber truncation
     mean_grad = pvgradient.norm_grad_log_abs(isen_mean["pv"], threshold=0.1)
     # 2) Rolling zonalization
     if args.fixed_km_scale:
@@ -109,7 +126,7 @@ if __name__ == "__main__":
     draw_arrow(fig, (0.71, 0.41), (0.71, 0.35)) # output to irwz_pvg
     # Arrow labels
     fig.text(0.80, 0.82, "rolling zonalization\n(60° window)", fontsize="medium")
-    fig.text(0.20, 0.68, "temporal average\n(14-day centered)", fontsize="medium")
+    fig.text(0.20, 0.67, "temporal average\n(14-day centered),\ntruncated ($k \\leq 4$)", fontsize="medium")
     # Dot-dot-dot connectors to indicate there are more window placements than
     # shown between the zonal* maps
     fig.text(0.54, 0.853, "...", fontsize="large", rotation=-45)
