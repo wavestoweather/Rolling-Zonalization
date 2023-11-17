@@ -126,11 +126,20 @@ def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
 def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     """Zonalization (hemispheric or sectoral/fixed-window).
 
-    The PV contours for the zonalization are automatically determined based on
-    the input data. Integrations are carried out with a conditional boxcounting
+    Integrations are carried out with a conditional boxcounting
     quadrature scheme. Northern and southern hemispheres are automatically
     detected and zonalized separately. Regions with 0-valued isentropic density
     are omitted in the surface integrals.
+
+    The PV contours for the zonalizations are automatically determined based on
+    the input data: 10 contours, linearly spaced between 0 and the maximum (NH)
+    or minimum (SH) value of PV found in the domain, are first zonalized to
+    provide an approximation of the zonalized PV profile. The first guess PV
+    profile is then interpolated to the input latitude grid and the
+    interpolated PV values at each grid latitude are then used as contours in
+    a second zonalization pass to obtain a refined zonalized profile. The
+    refined zonalized PV profile is finally interpolated to the input latitude
+    and returned.
 
     Parameters
     ----------
@@ -202,11 +211,11 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
 def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     """Rolling zonalization.
 
-    The PV contours for the zonalizations are automatically determined based on
-    the input data. Integrations are carried out with a conditional boxcounting
-    quadrature scheme. Northern and southern hemispheres are automatically
-    detected and zonalized separately. Regions with 0-valued isentropic density
-    are omitted in the surface integrals.
+    The PV contours for the zonalization are automatically determined based on
+    the input data (see :py:func:`zonalize`). Integrations are carried out with
+    a conditional boxcounting quadrature scheme. Northern and southern
+    hemispheres are automatically detected and zonalized separately. Regions
+    with 0-valued isentropic density are omitted in the surface integrals.
 
     Parameters
     ----------

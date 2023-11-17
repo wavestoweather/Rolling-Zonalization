@@ -189,7 +189,7 @@ def isentropic_density_isob(da_pt, *, names=None):
 
     Isentropic density ``σ = - g⁻¹ ∂p/∂θ`` computed as ``-(g ∂θ/∂p)⁻¹`` using
     a 2nd-order finite difference stencil. 0-values are assigned to grid points
-    with the unstable stratification.
+    with unstable stratification.
 
     The pressure coordinate (level) must be specified in ``hPa``.
 

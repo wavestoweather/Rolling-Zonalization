@@ -25,7 +25,12 @@ div#searchbox {
 }
 
 dl {
-  margin-bottom: 25px;
+    margin-bottom: 40px;
+}
+div.seealso {
+    margin-top: -20px;
+    border: 1px solid #ccc;
+    background-color: #eee;
 }
 
 body,
