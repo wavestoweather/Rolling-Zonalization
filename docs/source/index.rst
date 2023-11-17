@@ -3,6 +3,9 @@ Rossby Waveguide Python Package
 
 Documentation of Rossby waveguide diagnostics software from `wavestoweather/Rolling-Zonalization <https://github.com/wavestoweather/Rolling-Zonalization>`_.
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.8300732.svg
+  :target: https://doi.org/10.5281/zenodo.8300732
+
 .. note::
     We are not certain if and how this package will be maintained in the future.
     If you are interested in contributing, don't hesitate to get in touch:
