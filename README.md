@@ -1,5 +1,7 @@
 # Rolling-Zonalization
 
+![Rolling Zonalization example](https://raw.githubusercontent.com/wavestoweather/Rolling-Zonalization/main/docs/source/img/rzon.png)
+
 This repository contains the software to produce all figures of the manuscript "A New Atmospheric Background State to Diagnose Local Waveguidability" by C. Polster and V. Wirth (2023), under review. Preprint available on ESS Open Archive: https://doi.org/10.22541/essoar.169447416.65437422/v1.
 
 - Research by [Christopher Polster](https://dynmet.ipa.uni-mainz.de/christopher-polster/) and [Volkmar Wirth](https://dynmet.ipa.uni-mainz.de/volkmar-wirth/).
