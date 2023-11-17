@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="rwguide",
     description="Rossby waveguide analysis",
-    version="1.0.0",
+    version="1.1.0",
     author="Christopher Polster",
     url="https://github.com/wavestoweather/Rolling-Zonalization",
     packages=find_packages(where="src"),
