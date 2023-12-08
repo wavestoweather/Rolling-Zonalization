@@ -103,6 +103,10 @@ def norm_grad_log_abs(da, *, threshold=0., vectorize=True, names=None):
     vorticity, ``QGPV`` is quasi-geostropic potential vorticity and ``u`` is
     the zonal wind `(Martius et al. 2010)`_. 
 
+    .. note::
+        `d/dx log(x/a) = d/dx log(x) = 1/x` for all `a = const`, i.e. the
+        result of this function does not depend on the unit of its argument.
+
     .. _(Martius et al. 2010): https://dx.doi.org/10.1175/2009JAS2995.1
 
     Parameters
