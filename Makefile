@@ -129,6 +129,7 @@ py-install:
 py-compile: \
 		src/rwguide/hovmoeller/_ext$(PYEXT) \
 		src/rwguide/pvgradient/_ext$(PYEXT) \
+		src/rwguide/waveactivity/_ext$(PYEXT) \
 		src/rwguide/wavenumber/_ext$(PYEXT) \
 		src/rwguide/zonalization/_ext$(PYEXT)
 
