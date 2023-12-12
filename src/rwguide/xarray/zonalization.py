@@ -141,21 +141,30 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     refined zonalized PV profile is finally interpolated to the input latitude
     and returned.
 
+    E.g., hemispheric zonalization based on a zonal-mean background state isentropic
+    density profile `(Ghinassi et al. 2018)`_:
+
+    >>> area = np.cos(np.deg2rad(isen.coords["latitude"]))
+    >>> zonalize(area, isen["av"], isen["sg"], isen["sg"].mean(dim="longitude"))
+
+    .. _(Ghinassi et al. 2018): https://doi.org/10.1175/MWR-D-18-0068.1
+
     Parameters
     ----------
     da_area : xarray.DataArray
         Weighting window or meridional profile of weighting coefficients (for
         "normal" hemispheric zonalization).
     da_av : xarray.DataArray
-        Isentropic absolute vorticity field in `1 / s`. Core dimensions:
+        Isentropic absolute vorticity field in 1 / s. Core dimensions:
         latitude, longitude.
     da_sg : xarray.DataArray
-        Isentropic density field in `kg / m² / K`. Core dimensions: latitude,
+        Isentropic density field in kg / K / m². Core dimensions: latitude,
         longitude.
     da_bg : xarray.DataArray, optional
-        Background state isentropic density field in `kg / m² / K`. Core
+        Background state isentropic density field in kg / K / m². Core
         dimensions: latitude, longitude. If none given, *da_sg* is used for the
-        background too.
+        background too. If no longitude dimension is found, the meridional
+        profile is used at every longitude.
     vectorize : boolean, optional
         Use vectorization of :py:func:`xarray.apply_ufunc`.
     names : dict, optional
@@ -164,14 +173,14 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     Returns
     -------
     xarray.DataArray
-        Zonalized PV (in `PVU`).
+        Zonalized PV in PVU.
     """
     lat, lon, pv = _common.get_names(names, "lat", "lon", "pv")
     if da_bg is None:
         da_bg = da_sg
-    # If area weights are only a function of latitude, blow-up to 2D field
-    if lon not in da_area.coords:
-        da_area = da_area.expand_dims({ lon: da_av.coords[lon] }, axis=-1)
+    # Density background and area weights must be lat-lon fields
+    da_bg = _common.require_lon(da_bg, da_av.coords[lon])
+    da_area = _common.require_lon(da_area, da_av.coords[lon])
     # Determine indices where hemispheres can be separated
     nh_last = da_area[lat].sel({ lat: slice(90, 0) }).size
     sh_first = da_area[lat].size - da_area[lat].sel({ lat: slice(0, -90) }).size
@@ -216,13 +225,13 @@ def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names
     da_area : xarray.DataArray
         Weighting window.
     da_av : xarray.DataArray
-        Isentropic absolute vorticity field in `1 / s`. Core dimensions:
+        Isentropic absolute vorticity field in 1 / s. Core dimensions:
         latitude, longitude.
     da_sg : xarray.DataArray
-        Isentropic density field in `kg / m² / K`. Core dimensions: latitude,
+        Isentropic density field in kg / K / m². Core dimensions: latitude,
         longitude.
     da_bg : xarray.DataArray, optional
-        Background state isentropic density field in `kg / m² / K`. Core
+        Background state isentropic density field in kg / K / m². Core
         dimensions: latitude, longitude. If none given, *da_sg* is used for the
         background too.
     vectorize : boolean, optional
@@ -233,7 +242,7 @@ def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names
     Returns
     -------
     xarray.DataArray
-        Rolling zonalized PV (in `PVU`).
+        Rolling zonalized PV in PVU.
     """
     lat, lon, pv = _common.get_names(names, "lat", "lon", "pv")
     if da_bg is None:

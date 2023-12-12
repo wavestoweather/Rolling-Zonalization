@@ -43,3 +43,10 @@ def standard_name(identifier):
     """Standard name corresponding to a variable shorthand of rwguide."""
     return NAMES[identifier][0]
 
+
+def require_lon(da, lon_coord, axis=-1):
+    """Blow meridional profiles up to full lat-lon fields"""
+    if lon_coord.name not in da.dims:
+        da = da.expand_dims({ lon_coord.name: lon_coord }, axis=axis)
+    return da
+
