@@ -23,6 +23,7 @@ Contents
    wavenumber
    pvgradient
    zonalization
+   waveactivity
    visualization
    utils
 

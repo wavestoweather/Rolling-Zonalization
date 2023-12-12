@@ -171,13 +171,7 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
         da_bg = da_sg
     # If area weights are only a function of latitude, blow-up to 2D field
     if lon not in da_area.coords:
-        nlat = da_area.coords[lat].size
-        nlon = da_av.coords[lon].size
-        area2d = da_area.values.repeat(nlon).reshape((nlat, nlon))
-        da_area = xr.DataArray(area2d, coords={
-            lat: da_area.coords[lat],
-            lon: da_av.coords[lon]
-        })
+        da_area = da_area.expand_dims({ lon: da_av.coords[lon] }, axis=-1)
     # Determine indices where hemispheres can be separated
     nh_last = da_area[lat].sel({ lat: slice(90, 0) }).size
     sh_first = da_area[lat].size - da_area[lat].sel({ lat: slice(0, -90) }).size
