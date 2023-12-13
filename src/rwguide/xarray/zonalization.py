@@ -5,7 +5,12 @@ from . import common as _common
 from .. import zonalization as _zonalization
 
 
-def _window(window_fun, da_lon, da_lat, name, **kwargs):
+def _window1d(window_fun, da_lat, name, **kwargs):
+    values = window_fun(da_lat.values, **kwargs)
+    coords = { da_lat.name: da_lat.values }
+    return xr.DataArray(values, coords=coords, name=name, attrs=kwargs)
+
+def _window2d(window_fun, da_lon, da_lat, name, **kwargs):
     values = window_fun(da_lon.values, da_lat.values, **kwargs)
     nlon = values.shape[1]
     coords = {
@@ -13,6 +18,27 @@ def _window(window_fun, da_lon, da_lat, name, **kwargs):
         da_lon.name: da_lon.values[:nlon] - da_lon.values[0]
     }
     return xr.DataArray(values, coords=coords, name=name, attrs=kwargs)
+
+
+def area_weights(da_lat, name="area_weights", **kwargs):
+    """Area weights for a lat-lon-gridded sphere.
+
+    Parameters
+    ----------
+    da_lat : xarray.DataArray
+        Latitude coordinate.
+    name : str, optional
+        Name assigned to the output.
+    kwargs : any
+        Keyword arguments given to :py:func:`rwguide.zonalization.weighting.area_weights`.
+
+    Returns
+    -------
+    xarray.DataArray
+        Meridional profile of weights.
+
+    """
+    return _window1d(_zonalization.weighting.area_weights, da_lat, name, **kwargs)
     
 
 def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
@@ -38,7 +64,7 @@ def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
     da_lat : xarray.DataArray
         Latitude coordinate.
     name : str, optional
-        Name assigned to the output *DataArray*.
+        Name assigned to the output.
     kwargs : any
         Keyword arguments given to :py:func:`rwguide.zonalization.fixed_km_window`.
 
@@ -47,7 +73,7 @@ def fixed_km_window(da_lon, da_lat, name="fixed_km_window", **kwargs):
     xarray.DataArray
         Weighting window.
     """
-    return _window(_zonalization.fixed_km_window, da_lon, da_lat, name, **kwargs)
+    return _window2d(_zonalization.fixed_km_window, da_lon, da_lat, name, **kwargs)
 
 
 def fixed_deg_window(da_lon, da_lat, name="fixed_deg_window", **kwargs):
@@ -66,7 +92,7 @@ def fixed_deg_window(da_lon, da_lat, name="fixed_deg_window", **kwargs):
     da_lat : xarray.DataArray
         Latitude coordinate.
     name : str, optional
-        Name assigned to the output *DataArray*.
+        Name assigned to the output.
     kwargs : any
         Keyword arguments given to :py:func:`rwguide.zonalization.fixed_deg_window`.
 
@@ -75,7 +101,7 @@ def fixed_deg_window(da_lon, da_lat, name="fixed_deg_window", **kwargs):
     xarray.DataArray
         Weighting window.
     """
-    return _window(_zonalization.fixed_deg_window, da_lon, da_lat, name, **kwargs)
+    return _window2d(_zonalization.fixed_deg_window, da_lon, da_lat, name, **kwargs)
 
 
 def rolling_mean_background(da_area, da_sg, *, vectorize=True, names=None):
@@ -144,7 +170,7 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     E.g., hemispheric zonalization based on a zonal-mean background state isentropic
     density profile `(Ghinassi et al. 2018)`_:
 
-    >>> area = np.cos(np.deg2rad(isen.coords["latitude"]))
+    >>> area = area_weights(isen.coords["latitude"])
     >>> zonalize(area, isen["av"], isen["sg"], isen["sg"].mean(dim="longitude"))
 
     .. _(Ghinassi et al. 2018): https://doi.org/10.1175/MWR-D-18-0068.1

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
@@ -9,7 +8,6 @@
 
 // Physical constants
 #define RADIUS (6371.2e3) // m
-#define OMEGA  (7.292e-5) // 1/s
 
 // Trigonometry for degree-valued arguments
 #define DEG2RAD(angle) ( (angle) / 180. * M_PI )
@@ -67,23 +65,21 @@ void local_wave_activity(
     boxcount_line_half_weights(lat, nlat, weights);
     // Precompute full-box weights too
     double * areas = malloc(nlat * sizeof(double));
-    for (size_t i = 0; i < nlat; ++i) {
+    for (size_t i = 0; i < nlat; i++) {
         areas[i] = (weights[2*i] + weights[2*i+1]);
+    }
+    // LWA normalization with a / cos(lat)
+    double * normalization = malloc(nlat * sizeof(double));
+    for (size_t i = 0; i < nlat; i++) {
+        // Avoid div/0 for lat = 90° or -90°
+        normalization[i] = ispole(lat[i]) ? 1. : RADIUS / COSDEG(lat[i]);
     }
     // Iterate through levels
     for (size_t h = 0; h < nlev; h++) {
-        // Iterate over latitude/PV contour pairs
         for (size_t i = 0; i < nlat; i++) {
-
-            const double normalization = RADIUS / COSDEG(lat[i]); // TODO: precompute once at the start
-
             for (size_t j = 0; j < nlon; j++) {
                 // Contour value
                 const double pvc = pv_bg[h*nfld + i*nlon + j] / PVU;
-
-                // TODO decide which hemisphere it is based on sign of PV, then
-                // adapt domain of integration
-
                 // Skip if below ground
                 if (isnan(pvc)) {
                     lwa[h*nfld + i*nlon + j] = NAN;
@@ -123,11 +119,12 @@ void local_wave_activity(
                     }
                 }
                 // Normalization with 1/(a*cos(phi))
-                lwa[h*nfld + i*nlon + j] *= normalization;
+                lwa[h*nfld + i*nlon + j] *= normalization[i];
             }
         }
     }
     free(weights);
     free(areas);
+    free(normalization);
 }
 
