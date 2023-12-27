@@ -45,7 +45,10 @@ def standard_name(identifier):
 
 
 def require_lon(da, lon_coord, axis=-1):
-    """Blow meridional profiles up to full lat-lon fields"""
+    """Blow meridional profiles up to full lat-lon fields
+
+    .. versionadded:: 1.2
+    """
     if lon_coord.name not in da.dims:
         da = da.expand_dims({ lon_coord.name: lon_coord }, axis=axis)
     return da

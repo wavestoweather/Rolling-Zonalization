@@ -2,7 +2,7 @@
 
 ![Rolling Zonalization example](https://raw.githubusercontent.com/wavestoweather/Rolling-Zonalization/main/docs/source/img/rzon.png)
 
-This repository contains the software to produce all figures of the manuscript "A New Atmospheric Background State to Diagnose Local Waveguidability" by C. Polster and V. Wirth (2023), under review. Preprint available on ESS Open Archive: https://doi.org/10.22541/essoar.169447416.65437422/v1.
+This repository contains the software to produce all figures of the article: Polster, C., & Wirth, V. (2023). A New Atmospheric Background State to Diagnose Local Waveguidability. *Geophysical Research Letters*, 50, e2023GL106166. https://doi.org/10.1029/2023GL106166.
 
 - Research by [Christopher Polster](https://dynmet.ipa.uni-mainz.de/christopher-polster/) and [Volkmar Wirth](https://dynmet.ipa.uni-mainz.de/volkmar-wirth/).
 - Software by Christopher Polster.
@@ -10,6 +10,17 @@ This repository contains the software to produce all figures of the manuscript "
 [MIT License](LICENSE).
 
 [![DOI](https://zenodo.org/badge/682976838.svg)](https://zenodo.org/badge/latestdoi/682976838)
+
+
+## The `rwguide` Python Package
+
+An implementation of rolling zonalization is included in this repository.
+The software can be installed as a standalone Python package.
+Install the package from a clone of the repository:
+
+    $ pip install .
+
+Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonalization) for more information.
 
 
 ## How To Run
@@ -86,17 +97,6 @@ Figures are written to the `figures` directory:
 - Figure 2: `figures/schematic.pdf`,
 - Figure 3: `figures/climatology.pdf`,
 - Figure 4: `figures/episode.pdf`.
-
-
-## The `rwguide` Python Package
-
-An implementation of rolling zonalization is included in this repository.
-The software can be installed as a standalone Python package.
-Install the package from a clone of the repository:
-
-    $ pip install .
-
-Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonalization) for more information.
 
 
 ## Acknowledgements

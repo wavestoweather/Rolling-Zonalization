@@ -44,6 +44,22 @@ Requirements
 - Python 3 with numpy, scipy, xarray and cffi packages.
 
 
+News
+----
+
+**Release: Version 1.2** (27 Dec 2023)
+
+- New :py:mod:`rwguide.waveactivity` submodule with a basic implementation of finite-amplitude local wave activity.
+- Added `da_isen` argument for :py:func:`rwguide.xarray.pvgradient.isob_to_isen_all`.
+- Improved documentation.
+
+
+**Release: Version 1.1** (17 Nov 2023)
+
+- Fixed an issue about repeated calls to ``free`` in :py:func:`rwguide.pvgradient.horizontal_gradient`.
+- Improved documentation.
+
+
 Acknowledgements
 ----------------
 

@@ -23,6 +23,8 @@ def _window2d(window_fun, da_lon, da_lat, name, **kwargs):
 def area_weights(da_lat, name="area_weights", **kwargs):
     """Area weights for a lat-lon-gridded sphere.
 
+    .. versionadded:: 1.2
+
     Parameters
     ----------
     da_lat : xarray.DataArray
@@ -238,13 +240,15 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
 
 
 def zonalize_rolling(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
-    """Rolling zonalization.
+    """Rolling zonalization `(Polster and Wirth 2023)`_.
 
     The PV contours for the zonalization are automatically determined based on
     the input data (see :py:func:`zonalize`). Integrations are carried out with
     a conditional boxcounting quadrature scheme. Northern and southern
     hemispheres are automatically detected and zonalized separately. Regions
     with 0-valued isentropic density are omitted in the surface integrals.
+
+    .. _(Polster and Wirth 2023): https://dx.doi.org/10.1029/2023GL106166
 
     Parameters
     ----------

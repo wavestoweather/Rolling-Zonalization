@@ -8,7 +8,7 @@ from .. import waveactivity as _waveactivity
 def local_wave_activity(da_av, da_sg, da_pv_bg=None, *, vectorize=True, names=None):
     """Finite-amplitude local wave activity (FALWA or just LWA).
 
-    LWA is computed based on the formulation::
+    LWA is computed with a boxcounting quadrature as::
 
                     a     ⎧Δϕ
         A(λ,ϕ) =  ──────  ⎪   (q(λ,ϕ+ϕ') − Q(λ,ϕ)) σ cos(ϕ+ϕ') dϕ'
@@ -31,6 +31,8 @@ def local_wave_activity(da_av, da_sg, da_pv_bg=None, *, vectorize=True, names=No
     Barotropic local wave activity can be computed with this function by
     setting isentropic density to 1 everywhere (use
     :py:func:`xarray.ones_like` to generate `da_sg`).
+
+    .. versionadded:: 1.2
 
     .. _Nakamura and Solomon (2011): https://doi.org/10.1175/2011JAS3685.1
     .. _Ghinassi et al. (2018): https://doi.org/10.1175/MWR-D-18-0068.1

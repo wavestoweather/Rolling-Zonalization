@@ -4,10 +4,10 @@ Visualization Helpers
 Suggested Colormaps
 -------------------
 
-**Waveguidability proxy** (``‖∇log(PV)‖₂`` with PV in PVU):
+**Waveguidability proxy** (``‖∇log(PV)‖₂``):
 The colormap is adapted from a `cubehelix <https://people.phy.cam.ac.uk/dag9/CUBEHELIX/>`_ scheme with ``2.5`` start, ``-2.0`` rotations, ``1.0`` hue and ``1.0`` gamma.
 16 levels were extracted, but only the lightest 10 are used.
-Colors up to ``1.2e-6`` have been desaturated to highlight the winter-season waveguide detection threshold used by `Polster and Wirth (2023) <https://doi.org/10.22541/essoar.169447416.65437422/v1>`_.
+Colors up to ``1.2e-6`` (1/m) have been desaturated to highlight the winter-season waveguide detection threshold used by `Polster and Wirth (2023) <https://doi.org/10.22541/essoar.169447416.65437422/v1>`_.
 
 .. code-block:: py
 
