@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: "3.x"
       - name: Dependencies
-        run: pip install sphinx numpy scipy xarray cffi
+        run: pip install sphinx numpy scipy xarray cffi setuptools
       - name: Sphinx
         run: make docs
       - name: Disable Jekyll
