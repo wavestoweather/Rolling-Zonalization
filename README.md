@@ -99,6 +99,14 @@ Figures are written to the `figures` directory:
 - Figure 4: `figures/episode.pdf`.
 
 
+### Known Issues
+
+- Scripts occasionally get stuck in the middle of processing while doing seemingly nothing (no significant CPU usage).
+  The problem has been difficult to diagnose because the hangups seem to occur at a different stage of the processing every time.
+  Terminating a stuck script and re-running `make` can be sufficient to work around the issue.
+  Additionally, it might be beneficial to play around with the chunking, i.e. setting a different chunksize in the affected script (e.g. [here](https://github.com/wavestoweather/Rolling-Zonalization/blob/4e79ec2c6ff63785d2dcff165d172b556c39f7f0/src/calculate_sprops.py#L27)) and/or specifying `OMP_NUM_THREADS=1` or `OMP_NUM_THREADS=2` (to avoid possible problems with [oversubscription](https://docs.dask.org/en/latest/array-best-practices.html?highlight=OMP_NUM_THREADS#avoid-oversubscribing-threads)).
+
+
 ## Acknowledgements
 
 This research project has been carried out within the Transregional Collaborative Research Center SFB/TRR 165 "Waves to Weather" funded by the German Science Foundation (DFG). https://www.wavestoweather.de/
