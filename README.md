@@ -20,7 +20,9 @@ Install the package from a clone of the repository:
 
     $ pip install .
 
+If you are interested in computing (rolling) zonalized background states, start here.
 Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonalization) for more information.
+Other content of the repository is primarily included to reproduce the datasets and plots of Polster and Wirth (2023).
 
 
 ## How To Run
@@ -64,12 +66,29 @@ The data processing is already parallelized with the default [dask](https://www.
 Most scripts will provide a progress bar while running.
 
 
-To start data downloads without the data processing, use
+To only start data downloads without the data processing, use
 
     $ make reanalysis
 
+
+### Alternative Input
+
 If you already have a similar dataset containing temperature and horizontal wind components on pressure levels, it should generally be possible to substitute these files.
-A few changes to the `Makefile` might be necessary, e.g. setting new file paths and adapting the number of timesteps in the window for the rolling temporal mean.
+For reference, the preconfigured ERA5 downloader produces one file per year with content structured as:
+
+    <xarray.Dataset>
+    Dimensions:    (longitude: 240, latitude: 121, level: 18, time: 1460)
+    Coordinates:
+      * longitude  (longitude) float32 -180.0 -178.5 -177.0 ... 175.5 177.0 178.5
+      * latitude   (latitude) float32 90.0 88.5 87.0 85.5 ... -87.0 -88.5 -90.0
+      * level      (level) int32 50 70 100 150 200 250 ... 600 650 700 750 800 850
+      * time       (time) datetime64[ns] 2010-01-01 ... 2010-12-31T18:00:00
+    Data variables:
+        u          (time, level, latitude, longitude) float32 ...
+        v          (time, level, latitude, longitude) float32 ...
+        t          (time, level, latitude, longitude) float32 ...
+
+A few changes might be necessary to accomodate different file content structure, grid resolutions, etc. (e.g. by specifying the appropriate file paths in the `Makefile`, adapting the number of timesteps in the window for the rolling temporal mean, ...).
 
 
 ### Output
@@ -104,7 +123,7 @@ Figures are written to the `figures` directory:
 - Scripts occasionally get stuck in the middle of processing while doing seemingly nothing (no significant CPU usage).
   The problem has been difficult to diagnose because the hangups seem to occur at a different stage of the processing every time.
   Terminating a stuck script and re-running `make` can be sufficient to work around the issue.
-  Additionally, it might be beneficial to play around with the chunking, i.e. setting a different chunksize in the affected script (e.g. [here](https://github.com/wavestoweather/Rolling-Zonalization/blob/4e79ec2c6ff63785d2dcff165d172b556c39f7f0/src/calculate_sprops.py#L27)) and/or specifying `OMP_NUM_THREADS=1` or `OMP_NUM_THREADS=2` (to avoid possible problems with [oversubscription](https://docs.dask.org/en/latest/array-best-practices.html?highlight=OMP_NUM_THREADS#avoid-oversubscribing-threads)).
+- Parallel performance can be optimized for a specific machine by setting appropriate chunksizes in the processing scripts, e.g. [here](https://github.com/wavestoweather/Rolling-Zonalization/blob/4e79ec2c6ff63785d2dcff165d172b556c39f7f0/src/calculate_sprops.py#L27)). Additionally, it might be beneficial or necessary to specify `OMP_NUM_THREADS=1` or `OMP_NUM_THREADS=2` to avoid [oversubscription](https://docs.dask.org/en/latest/array-best-practices.html?highlight=OMP_NUM_THREADS#avoid-oversubscribing-threads).
 
 
 ## Acknowledgements
