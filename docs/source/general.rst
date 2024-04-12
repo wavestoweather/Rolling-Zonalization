@@ -137,9 +137,9 @@ The following names for data fields are recognized by the xarray interface:
       - ``ks``
 
 Overrides can be provided for nonconforming data in any function of the xarray interface that accepts a `names` argument.
-E.g., if a pressure coordinate is called ´´isobarticInhPa´´ instead of ´´level´´, use an override (based on the override name from the tables above):
+E.g., if a pressure coordinate is called ``isobaricInhPa`` instead of ``level``, use an override (based on the override name from the tables above):
 
->>> rwguide.xarray.pvgradient.potential_temperature_isob(..., names={ "iosb": "isobaricInhPa" })
+>>> rwguide.xarray.pvgradient.potential_temperature_isob(..., names={ "isob": "isobaricInhPa" })
 
 
 Vectorization
