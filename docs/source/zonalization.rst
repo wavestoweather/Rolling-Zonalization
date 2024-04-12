@@ -5,16 +5,6 @@ Zonalization and rolling zonalization of potential vorticity (PV) on isentropes,
 
 .. image:: img/rzon.png
 
-Related literature:
-
-- `Butchard and Remsberg (1986) <https://dx.doi.org/10.1175/1520-0469(1986)043%3C1319:TAOTSP%3E2.0.CO;2>`_
-- `Allen and Nakamura (2003) <https://dx.doi.org/10.1175/1520-0469(2003)060%3C0287:TELADT%3E2.0.CO;2>`_
-- `Nakamura and Zhu (2010) <https://dx.doi.org/10.1175/2010JAS3432.1>`_
-- `Nakamura and Solomon (2011) <https://dx.doi.org/10.1175/2011JAS3685.1>`_ (hemispheric zonalization with PV inversion)
-- `Methven and Berrisford (2015) <https://dx.doi.org/10.1002/qj.2518>`_ (hemispheric zonalization with PV inversion)
-- `Wirth and Polster (2021) <https://dx.doi.org/10.1175/JAS-D-20-0292.1>`_
-- `Polster and Wirth (2023) <https://dx.doi.org/10.1029/2023GL106166>`_ (rolling zonalization)
-
 
 Example
 -------
@@ -69,6 +59,18 @@ Coordinates:
   * isentrope  (isentrope) float64 340.0 330.0 320.0
   * longitude  (longitude) float32 -180.0 -178.5 -177.0 ... 175.5 177.0 178.5
   * time       (time) datetime64[ns] 2018-01-01 ... 2018-12-31T18:00:00
+
+
+Related literature
+------------------
+
+- `Butchard and Remsberg (1986) <https://dx.doi.org/10.1175/1520-0469(1986)043%3C1319:TAOTSP%3E2.0.CO;2>`_
+- `Allen and Nakamura (2003) <https://dx.doi.org/10.1175/1520-0469(2003)060%3C0287:TELADT%3E2.0.CO;2>`_
+- `Nakamura and Zhu (2010) <https://dx.doi.org/10.1175/2010JAS3432.1>`_
+- `Nakamura and Solomon (2011) <https://dx.doi.org/10.1175/2011JAS3685.1>`_ (hemispheric zonalization with PV inversion)
+- `Methven and Berrisford (2015) <https://dx.doi.org/10.1002/qj.2518>`_ (hemispheric zonalization with PV inversion)
+- `Wirth and Polster (2021) <https://dx.doi.org/10.1175/JAS-D-20-0292.1>`_
+- `Polster and Wirth (2023) <https://dx.doi.org/10.1029/2023GL106166>`_ (rolling zonalization)
 
 
 Xarray Interface

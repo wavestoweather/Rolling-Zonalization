@@ -13,21 +13,13 @@ Contents
 .. toctree::
    :maxdepth: 1
 
+   general
    wavenumber
    pvgradient
    zonalization
    waveactivity
    visualization
    utils
-
-.. note::
-    All submodules have both an xarray and a numpy interface.
-    The numpy interface wraps the underlying C-extensions closely.
-    The xarray interface wraps the numpy interface, handles coordinates automatically and is `dask-compatible <https://docs.xarray.dev/en/stable/generated/xarray.apply_ufunc.html>`_.
-    It is highly recommended to use the xarray-based functions.
-
-    Many functions offer to use the vectorization of :py:func:`xarray.apply_ufunc`.
-    This vectorization mode can be slower than the vectorization built into the C-extensions but often uses much less memory.
 
 
 Setup

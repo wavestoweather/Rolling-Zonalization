@@ -30,7 +30,9 @@ def local_wave_activity(da_av, da_sg, da_pv_bg=None, *, vectorize=True, names=No
 
     Barotropic local wave activity can be computed with this function by
     setting isentropic density to 1 everywhere (use
-    :py:func:`xarray.ones_like` to generate `da_sg`).
+    :py:func:`xarray.ones_like` to generate `da_sg`). However, be aware of the
+    requirement to input PV in PVU, so scaling with a factor 1e6 might be
+    required for some inputs/outputs.
 
     .. versionadded:: 1.2
 

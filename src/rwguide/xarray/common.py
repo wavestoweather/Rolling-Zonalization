@@ -1,3 +1,5 @@
+# TODO: actually use this as a look-up table, at the moment only the first name
+# from the list is recognized
 NAMES = {
     "lat": ["latitude", "lat", "ylat"],
     "lon": ["longitude", "lon", "xlon"],
