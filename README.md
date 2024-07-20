@@ -36,7 +36,7 @@ Clone this repository:
 
 - make
 - C compiler to build Python extensions
-- Python 3 with packages listed in [`requirements.txt`](requirements.txt) (the specified versions were used during development, older/newer versions may or may not work)
+- Python 3 with packages listed in [`requirements.txt`](requirements.txt). The specified versions together with Python 3.9 were used during development, older/newer versions may or may not work. Note that setuptools<70.0.0 is affected by a [security vulnerability](https://github.com/advisories/ghsa-cx63-2mw6-8hw5).
 
 
 ### Data Download, Processing and Plots
