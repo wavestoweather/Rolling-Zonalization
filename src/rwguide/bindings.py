@@ -42,7 +42,7 @@ def require(arr, dtype=np.double, order="C", shape=None, fold=False):
         sides until a compatible shape is found. If no compatible shape can be
         found, an exception is thrown.
     fold : boolean, optional
-        When folding is enabled and the input array as more dimensions than
+        When folding is enabled and the input array has more dimensions than
         specified in `shape`, additional dimensions of the array are flattened
         into the first dimension.
 

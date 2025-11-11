@@ -167,7 +167,7 @@ def zonalize(da_area, da_av, da_sg, da_bg=None, *, vectorize=True, names=None):
     interpolated PV values at each grid latitude are then used as contours in
     a second zonalization pass to obtain a refined zonalized profile. The
     refined zonalized PV profile is finally interpolated to the input latitude
-    and returned.
+    grid and returned.
 
     E.g., hemispheric zonalization based on a zonal-mean background state isentropic
     density profile `(Ghinassi et al. 2018)`_:

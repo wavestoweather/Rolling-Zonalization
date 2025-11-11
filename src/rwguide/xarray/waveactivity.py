@@ -21,9 +21,9 @@ def local_wave_activity(da_av, da_sg, da_pv_bg=None, *, vectorize=True, names=No
     .. note::
         The current implementation does not produce negative LWA when
         encountering ground-intersecting isentropes. The (Lagrangian)
-        information about the location of the surface is also for the Eulerian
-        parts of the integral, so that negative values cannot arise and LWA is
-        strictly nonnegative. See footnote 3 of `Nakamura and Solomon (2011)`_.
+        information about the location of the surface is also used for the
+        Eulerian parts of the integral, so that negative values cannot arise
+        and LWA is strictly nonnegative. See footnote 3 of `Nakamura and Solomon (2011)`_.
         This should not affect the value of LWA as a Rossby wave amplitude
         diagnostic for the extratropical upper troposphere, as considered by
         `Ghinassi et al. (2018)`_.

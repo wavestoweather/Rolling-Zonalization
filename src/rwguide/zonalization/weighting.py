@@ -73,8 +73,8 @@ def fold_periodic(window, n, agg="max"):
     n : number
         The width of the periodic domain (# of gridpoints).
     agg : "sum" | "clip" | "max", optional
-        How to aggregate values in the folded regions. `clip` restricts values
-        to the maximum of the original window after summation.
+        How to aggregate values in the folded regions. `clip` uses sum but
+        restricts values to the maximum of the original window after summation.
     Returns
     -------
     np.ndarray
