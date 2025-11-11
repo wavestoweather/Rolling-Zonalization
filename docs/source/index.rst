@@ -36,7 +36,7 @@ Clone or download the `Rolling-Zonalization <https://github.com/wavestoweather/R
 
 .. code-block:: bash
 
-    $ pip install .
+    $ make py-install
 
 from the root of the repository.
 

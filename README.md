@@ -4,7 +4,7 @@
 
 This repository contains the software to produce all figures of the article: Polster, C., & Wirth, V. (2023). A New Atmospheric Background State to Diagnose Local Waveguidability. *Geophysical Research Letters*, 50, e2023GL106166. https://doi.org/10.1029/2023GL106166.
 
-- Research by [Christopher Polster](https://dynmet.ipa.uni-mainz.de/christopher-polster/) and [Volkmar Wirth](https://dynmet.ipa.uni-mainz.de/volkmar-wirth/).
+- Research by [Christopher Polster](https://orcid.org/0000-0001-6935-2555) and [Volkmar Wirth](https://orcid.org/0000-0001-5611-8786).
 - Software by Christopher Polster.
 
 [MIT License](LICENSE).
@@ -18,21 +18,32 @@ An implementation of rolling zonalization is included in this repository.
 The software can be installed as a standalone Python package.
 Install the package from a clone of the repository:
 
-    $ pip install .
+    $ make py-install
 
 If you are interested in computing (rolling) zonalized background states, start here.
 Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonalization) for more information.
-Other content of the repository is primarily included to reproduce the datasets and plots of Polster and Wirth (2023).
+
+> [!NOTE]
+> Installation directly with pip does not work with current versions of setuptools, as the build steps for the C-extensions are missing.
+> Please install via the make command provided above, which compiles the extensions first and then installs until a better solution is provided.
+> `make` and `cffi` have to be installed in the environment before running the command.
 
 
-## How To Run
+## How To Run the Data Analysis
 
-Clone this repository:
+> [!TIP]
+> This content of the repository is primarily included to reproduce the datasets and plots of Polster and Wirth (2023).
+> If you are just interesting in using the rwguide package, you do not need to follow these steps.
+
+Clone the repository:
 
     $ git clone https://github.com/wavestoweather/Rolling-Zonalization.git
 
 
 ### Software Requirements
+
+> [!WARNING]
+> The specified software environment is out-of-date and changes to the CDS likely mean that some changes are necessary to get the analysis running again.
 
 - make
 - C compiler to build Python extensions
