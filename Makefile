@@ -124,10 +124,10 @@ data/PVrz-330K-%deg.nc: src/calculate_pvrz.py src/rwguide/pvgradient/_ext$(PYEXT
 
 # Python 'rwguide' package
 py-clean:
-	rm src/rwguide/*/_ext*
-	rm src/rwguide/*/ext.o
+	rm -f src/rwguide/*/_ext*
+	rm -f src/rwguide/*/ext.o
 
-py-install: py-compile
+py-install:
 	pip install .
 
 py-compile: \
