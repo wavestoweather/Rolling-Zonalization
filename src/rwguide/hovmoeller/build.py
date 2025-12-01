@@ -1,3 +1,4 @@
+import argparse
 import os
 import cffi
 
@@ -31,6 +32,15 @@ ffibuilder.set_source(
     libraries=["m"],
 )
 
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--emit-c-code", type=str, default=None)
+
 if __name__ == "__main__":
-    ffibuilder.compile(verbose=True)
+    args = parser.parse_args()
+
+    if args.emit_c_code is not None:
+        ffibuilder.emit_c_code(args.emit_c_code)
+    else:
+        ffibuilder.compile(verbose=True)
 

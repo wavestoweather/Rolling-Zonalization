@@ -14,26 +14,22 @@ This repository contains the software to produce all figures of the article: Pol
 
 ## The `rwguide` Python Package
 
-An implementation of rolling zonalization is included in this repository.
-The software can be installed as a standalone Python package.
+> [!TIP]
+> If you are interested in computing (rolling) zonalized background states, start here.
+
+The `rwguide` software can be installed as a standalone Python package.
 Install the package from a clone of the repository:
 
-    $ make py-install
+    $ pip install .
 
-If you are interested in computing (rolling) zonalized background states, start here.
 Visit the [package documentation](https://wavestoweather.github.io/Rolling-Zonalization) for more information.
-
-> [!NOTE]
-> Installation directly with pip does not work with current versions of setuptools, as the build steps for the C-extensions are missing.
-> Please install via the make command provided above, which compiles the extensions first and then installs until a better solution is provided.
-> `make` and `cffi` have to be installed in the environment before running the command.
 
 
 ## How To Run the Data Analysis
 
 > [!TIP]
-> This content of the repository is primarily included to reproduce the datasets and plots of Polster and Wirth (2023).
-> If you are just interesting in using the rwguide package, you do not need to follow these steps.
+> This part of the repository reproduces the datasets and plots of Polster and Wirth (2023).
+> If you are just interesting in using the `rwguide` package, you do not need to follow these steps.
 
 Clone the repository:
 
@@ -43,7 +39,7 @@ Clone the repository:
 ### Software Requirements
 
 > [!WARNING]
-> The specified software environment is out-of-date and changes to the CDS likely mean that some changes are necessary to get the analysis running again.
+> The specified software environment is out-of-date and changes to the CDS likely mean that some changes to the code are necessary to get the analysis running again.
 
 - make
 - C compiler to build Python extensions

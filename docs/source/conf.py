@@ -1,14 +1,7 @@
-# -- Path setup --------------------------------------------------------------
-
-import os
-import sys
-sys.path.insert(0, os.path.abspath("../../src"))
-
-
 # -- Project information -----------------------------------------------------
 
 project = "rwguide"
-copyright = "2023, Christopher Polster"
+copyright = "2025, Christopher Polster"
 author = "Christopher Polster"
 
 
