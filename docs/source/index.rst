@@ -28,7 +28,7 @@ Setup
 **Requirements:**
 
 - C compiler to build extensions
-- Python 3 with numpy, scipy, xarray, cffi and setuptools packages.
+- Python 3.9 or newer
 
 **Local install:**
 
@@ -36,12 +36,18 @@ Clone or download the `Rolling-Zonalization <https://github.com/wavestoweather/R
 
 .. code-block:: bash
 
-    $ make py-install
+    $ pip install .
 
 from the root of the repository.
 
+
 News
 ----
+
+**Release:** Version 1.2.2 (1 Dec 2025)
+
+- Fix broken package installation.
+
 
 **Release:** Version 1.2 (27 Dec 2023)
 
@@ -59,5 +65,5 @@ News
 Acknowledgements
 ----------------
 
-This software has been created within the Transregional Collaborative Research Center SFB/TRR 165 "Waves to Weather" funded by the German Science Foundation (DFG). https://www.wavestoweather.de/
+This software was created within the Transregional Collaborative Research Center SFB/TRR 165 "Waves to Weather" funded by the German Science Foundation (DFG). https://www.wavestoweather.de/
 
