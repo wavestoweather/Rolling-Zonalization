@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -22,17 +22,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Pages setup
         uses: actions/configure-pages@v5
       - name: Python setup
         uses: actions/setup-python@v6
         with:
-          python-version: "3.x"
-      - name: Dependencies
-        run: pip install sphinx numpy scipy xarray cffi setuptools
-      - name: Sphinx
-        run: make docs
+          python-version: "3.14"
+      - name: Install package
+        run: pip install .[docs]
+      - name: Build docs with installed package
+        run: sphinx-build -M html "docs/source" "docs"
       - name: Disable Jekyll
         run: touch docs/html/.nojekyll
       - name: Upload artifact

@@ -141,7 +141,7 @@ src/%/_ext$(PYEXT): src/%/build.py src/%/ext.c
 	cd src && python3 $*/build.py
 
 
-# Documentation
-docs: py-compile
+# Documentation (builds from installed package)
+docs:
 	sphinx-build -M html "docs/source" "docs"
 

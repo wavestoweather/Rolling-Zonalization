@@ -26,6 +26,11 @@ dependencies = [
     "xarray>=2022.11.0"
 ]
 
+[project.optional-dependencies]
+docs = [
+    "Sphinx>=9"
+]
+
 [project.urls]
 documentation = "https://wavestoweather.github.io/Rolling-Zonalization"
 source = "https://github.com/wavestoweather/Rolling-Zonalization"
