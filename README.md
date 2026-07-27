@@ -39,11 +39,11 @@ Clone the repository:
 ### Software Requirements
 
 > [!WARNING]
-> The specified software environment is out-of-date and changes to the CDS likely mean that some changes to the code are necessary to get the analysis running again.
+> The software environment specified in `requirements.txt` is outdated and changes to the CDS likely mean that changes to the code are necessary before the analysis can be run.
 
 - make
 - C compiler to build Python extensions
-- Python 3 with packages listed in [`requirements.txt`](requirements.txt). The specified versions together with Python 3.9 were used during development, older/newer versions may or may not work. Note that setuptools<70.0.0 is affected by a [security vulnerability](https://github.com/advisories/ghsa-cx63-2mw6-8hw5).
+- Python 3 with packages listed in [`requirements.txt`](requirements.txt). The specified versions together with Python 3.9 were used during development. Other versions may or may not work. Please note that the specified version of setuptools is affected by security vulnerabilities ([1](https://github.com/advisories/ghsa-cx63-2mw6-8hw5), [2](https://github.com/advisories/GHSA-h35f-9h28-mq5c)). Since version 1.2.2, the rwguide package installation does not use setuptools anymore.
 
 
 ### Data Download, Processing and Plots
